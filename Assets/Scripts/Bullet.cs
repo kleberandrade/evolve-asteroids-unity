@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class Bullet : MonoBehaviour
 {
-    public float m_TimeToDestroy = 1.0f;
+    [SerializeField]
+    private float m_TimeToDestroy = 1.0f;
 
-    private void Start()
+    public void Start()
     {
-        Destroy(gameObject, 1.0f);
+        Destroy(gameObject, m_TimeToDestroy);
         GetComponent<Rigidbody2D>().AddForce(transform.up * 400);
     }
 }

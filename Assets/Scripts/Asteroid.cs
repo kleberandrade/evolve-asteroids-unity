@@ -1,21 +1,30 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class Asteroid : MonoBehaviour
 {
-    public AudioClip m_DestroyAudioClip;
-    public int m_Score;
-    public GameObject m_SmallAsteroid;
-    public int m_Count;
-    private Rigidbody2D m_Rigidbody;
+    [SerializeField]
+    private AudioClip m_DestroyAudioClip = null;
 
-    private void Start()
+    [SerializeField]
+    private int m_Score = 20;
+
+    [SerializeField]
+    private GameObject m_SmallAsteroid = null;
+
+    [SerializeField]
+    private int m_Count = 3;
+
+    private Rigidbody2D m_Rigidbody = null;
+
+    public void Start()
     {
         m_Rigidbody = GetComponent<Rigidbody2D>();
         m_Rigidbody.AddForce(transform.up * Random.Range(-360.0f, 360.0f));
         m_Rigidbody.angularVelocity = Random.Range(0.0f, 180.0f);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerEnter2D(Collider2D collision)
     {
         if (!collision.CompareTag("Bullet"))
         {

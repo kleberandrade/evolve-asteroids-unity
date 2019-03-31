@@ -4,12 +4,12 @@ public class EuclideanTorus : MonoBehaviour
 {
     private Bounds m_Bounds;
 
-    private void Start()
+    public void Start()
     {
         m_Bounds = Camera.main.OrthographicBounds();
     }
 
-    private void Update()
+    public void Update()
     {
         if (transform.position.x > m_Bounds.max.x)
         {

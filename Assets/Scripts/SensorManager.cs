@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class SensorManager : MonoBehaviour
 {
-    public DistanceSensor m_DistanceSensorPrefab;
-    public int m_DistanceSensorCount = 8;
-    private DistanceSensor[] m_Sensors;
+    [SerializeField]
+    private DistanceSensor m_DistanceSensorPrefab = null;
 
-    private void Start()
+    [SerializeField]
+    private int m_DistanceSensorCount = 8;
+
+    private DistanceSensor[] m_Sensors = null;
+
+    public void Start()
     {
         float angle = 360 / (float)m_DistanceSensorCount;
         for (int i = 0; i < m_DistanceSensorCount; i++)
@@ -55,7 +59,7 @@ public class SensorManager : MonoBehaviour
         return builder.ToString();
     }
 
-    private void LateUpdate()
+    public void LateUpdate()
     {
         Debug.Log(ToString());
     }

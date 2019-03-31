@@ -27,6 +27,8 @@ public class Chromosome
         {
             Genes[i] = Helper.NextInt(MAX_ALLELE);
         }
+
+        Fitness = 0.0f;
     }
 
     public Chromosome Crossover(Chromosome otherParent, double crossoverRate = 0.5)

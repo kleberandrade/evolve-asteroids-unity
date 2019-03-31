@@ -1,23 +1,31 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class Ship : MonoBehaviour
 {
-    public float m_RotationSpeed = 100.0f;
-    public float m_ThrustForce = 3f;
+    [SerializeField]
+    private float m_RotationSpeed = 100.0f;
 
-    public AudioClip m_CrashAudioClip;
-    public AudioClip m_ShootAudioClip;
+    [SerializeField]
+    private float m_ThrustForce = 3.0f;
 
-    public GameObject m_Bullet;
+    [SerializeField]
+    private AudioClip m_CrashAudioClip = null;
 
-    private Rigidbody2D m_Rigidbody;
+    [SerializeField]
+    private AudioClip m_ShootAudioClip = null;
 
-    private void Start()
+    [SerializeField]
+    private GameObject m_Bullet = null;
+
+    private Rigidbody2D m_Rigidbody = null;
+
+    public void Start()
     {
         m_Rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    private void FixedUpdate()
+    public void FixedUpdate()
     {
         transform.Rotate(0, 0, -Input.GetAxis("Horizontal") * m_RotationSpeed * Time.deltaTime);
 
@@ -29,7 +37,7 @@ public class Ship : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Bullet"))
         {

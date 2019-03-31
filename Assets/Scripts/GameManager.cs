@@ -6,23 +6,36 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     [Header("UI (User Interface)")]
-    public Text m_ScoreText;
-    public Text m_WaveText;
-    public Text m_HiscoreText;
+    [SerializeField]
+    private Text m_ScoreText;
+
+    [SerializeField]
+    private Text m_WaveText;
+
+    [SerializeField]
+    private Text m_HiscoreText;
 
     [Header("Prefabs")]
-    public GameObject m_Asteroid;
-    public GameObject m_Ship;
+    [SerializeField]
+    private GameObject m_Asteroid;
+
+    [SerializeField]
+    private GameObject m_Ship;
 
     private int m_Score;
+
     private int m_Highscore;
+
     private int m_AsteroidsRemaining;
+
     private int m_Wave;
-    public int m_IncreaseEachWave = 4;
 
-    private const string k_HighscoreKey = "highscore"; 
+    [SerializeField]
+    private int m_IncreaseEachWave = 4;
 
-    private void Awake()
+    private const string k_HighscoreKey = "highscore";
+
+    public void Awake()
     {
         if (Instance != null)
         {
@@ -34,12 +47,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Start()
+    public void Start()
     {
         RestartGame();
     }
-   
-    private void RestartGame()
+
+    public void RestartGame()
     {
         m_Highscore = PlayerPrefs.GetInt(k_HighscoreKey, 0);
         m_Score = 0;
@@ -49,19 +62,19 @@ public class GameManager : MonoBehaviour
         SpawnAsteroids();
     }
 
-    private void SpawnShip()
+    public void SpawnShip()
     {
         Instantiate(m_Ship, Vector3.zero, Quaternion.identity);
     }
-    
-    private void UpdateHud()
+
+    public void UpdateHud()
     {
         m_ScoreText.text = $"SCORE: {m_Score}";
         m_HiscoreText.text = $"HIGHSCORE: {m_Highscore}";
         m_WaveText.text = $"WAVE: {m_Wave}";
     }
-    
-    private void SpawnAsteroids()
+
+    public void SpawnAsteroids()
     {
         DestroyAllExistingAsteroids();
 
@@ -115,13 +128,13 @@ public class GameManager : MonoBehaviour
         m_AsteroidsRemaining += size;
     }
 
-    private void DestroyAllExistingAsteroids()
+    public void DestroyAllExistingAsteroids()
     {
         DestroyExistingAsteroids("Big Asteroid");
         DestroyExistingAsteroids("Small Asteroid");
     }
 
-    private void DestroyExistingAsteroids(string tag)
+    public void DestroyExistingAsteroids(string tag)
     {
         GameObject[] asteroids = GameObject.FindGameObjectsWithTag(tag);
         foreach (GameObject current in asteroids)

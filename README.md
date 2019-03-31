@@ -1,5 +1,7 @@
 # Evolve Asteroids - Genetic Algorithm for Asteroids Game
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/55700a6a111d4e21bd8a60109ddbdf6a)](https://app.codacy.com/app/kleberandrade/evolve-asteroids?utm_source=github.com&utm_medium=referral&utm_content=kleberandrade/evolve-asteroids&utm_campaign=Badge_Grade_Dashboard)
+
 An asteroids like game powered by artificial intelligence enhanced with evolutionary algorithms.
 
 ## Asteroids

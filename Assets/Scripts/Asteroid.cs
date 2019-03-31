@@ -15,13 +15,11 @@ public class Asteroid : MonoBehaviour
     [SerializeField]
     private int m_Count = 3;
 
-    private Rigidbody2D m_Rigidbody;
-
     public void Start()
     {
-        m_Rigidbody = GetComponent<Rigidbody2D>();
-        m_Rigidbody.AddForce(transform.up * Random.Range(-360.0f, 360.0f));
-        m_Rigidbody.angularVelocity = Random.Range(0.0f, 180.0f);
+        Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
+        rigidbody.AddForce(transform.up * Random.Range(-360.0f, 360.0f));
+        rigidbody.angularVelocity = Random.Range(0.0f, 180.0f);
     }
 
     public void OnTriggerEnter2D(Collider2D collision)

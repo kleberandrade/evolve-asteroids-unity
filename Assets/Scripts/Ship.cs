@@ -24,7 +24,9 @@ public class Ship : MonoBehaviour
         m_Rigidbody.AddForce(transform.up * m_ThrustForce * Input.GetAxis("Vertical"));
 
         if (Input.GetButtonDown("Fire1"))
+        {
             ShootBullet();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

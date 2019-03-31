@@ -32,7 +32,6 @@ Asteroids is a space-themed multidirectional shooter arcade game designed by Lyl
   <img src="https://github.com/kleberandrade/evolve-asteroids/blob/master/Screenshots/sensors.PNG" height="500"/>
 </p>
 
-
 Licença
 ----
 

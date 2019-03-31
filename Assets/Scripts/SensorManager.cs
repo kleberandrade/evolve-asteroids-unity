@@ -26,7 +26,9 @@ public class SensorManager : MonoBehaviour
     {
         int[] array = new int[m_Sensors.Length];
         for (int i = 0; i < m_Sensors.Length; i++)
+        {
             array[i] = m_Sensors[i].Detected ? 1 : 0;
+        }
 
         return array;
     }

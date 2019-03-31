@@ -30,7 +30,9 @@ public class Ship : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Bullet"))
+        {
             return;
+        }
 
         transform.position = new Vector3(0, 0, 0);
         m_Rigidbody.velocity = new Vector3(0, 0, 0);

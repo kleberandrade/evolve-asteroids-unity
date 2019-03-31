@@ -10,7 +10,10 @@ public class GeneticAlgorithm
     {
         List<Chromosome> population = new List<Chromosome>();
         for (int i = 0; i < PopulationSize; i++)
+        {
             population.Add(new Chromosome(ChromosomeLength));
+        }
+
         return population;
     }
 }

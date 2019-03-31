@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; } = null;
+    public static GameManager Instance { get; private set; }
 
     [Header("UI (User Interface)")]
     public Text m_ScoreText;
@@ -20,14 +20,18 @@ public class GameManager : MonoBehaviour
     private int m_Wave;
     public int m_IncreaseEachWave = 4;
 
-    private string m_HighscoreKey = "highscore"; 
+    private const string k_HighscoreKey = "highscore"; 
 
     private void Awake()
     {
         if (Instance != null)
+        {
             Destroy(gameObject);
+        }
         else
+        {
             Instance = this;
+        }
     }
 
     private void Start()
@@ -37,12 +41,10 @@ public class GameManager : MonoBehaviour
    
     private void RestartGame()
     {
-        m_Highscore = PlayerPrefs.GetInt(m_HighscoreKey, 0);
+        m_Highscore = PlayerPrefs.GetInt(k_HighscoreKey, 0);
         m_Score = 0;
         m_Wave = 1;
-
         UpdateHud();
-
         SpawnShip();
         SpawnAsteroids();
     }
@@ -85,7 +87,7 @@ public class GameManager : MonoBehaviour
 
         if (m_Score > m_Highscore)
         {
-            PlayerPrefs.SetInt(m_HighscoreKey, m_Score);
+            PlayerPrefs.SetInt(k_HighscoreKey, m_Score);
             PlayerPrefs.Save();
         }
 
@@ -123,6 +125,8 @@ public class GameManager : MonoBehaviour
     {
         GameObject[] asteroids = GameObject.FindGameObjectsWithTag(tag);
         foreach (GameObject current in asteroids)
+        {
             Destroy(current);
+        }
     }
 }

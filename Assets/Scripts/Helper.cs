@@ -2,16 +2,16 @@
 
 public class Helper
 {
-    private static Random m_Random = null;
+    private static Random m_Random;
 
     private Helper() { }
 
     private static void InitializeRandomNumber()
     {
-        if (m_Random != null)
-            return;
-
-        m_Random = new Random();
+        if (m_Random == null)
+        {
+            m_Random = new Random();
+        }
     }
 
     public static int NextInt(int min, int max)

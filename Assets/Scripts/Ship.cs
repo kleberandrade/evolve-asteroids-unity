@@ -10,15 +10,15 @@ public class Ship : MonoBehaviour
     private float m_ThrustForce = 3.0f;
 
     [SerializeField]
-    private AudioClip m_CrashAudioClip = null;
+    private AudioClip m_CrashAudioClip;
 
     [SerializeField]
-    private AudioClip m_ShootAudioClip = null;
+    private AudioClip m_ShootAudioClip;
 
     [SerializeField]
-    private GameObject m_Bullet = null;
+    private GameObject m_Bullet;
 
-    private Rigidbody2D m_Rigidbody = null;
+    private Rigidbody2D m_Rigidbody;
 
     public void Start()
     {

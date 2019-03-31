@@ -4,18 +4,18 @@
 public class Asteroid : MonoBehaviour
 {
     [SerializeField]
-    private AudioClip m_DestroyAudioClip = null;
+    private AudioClip m_DestroyAudioClip;
 
     [SerializeField]
     private int m_Score = 20;
 
     [SerializeField]
-    private GameObject m_SmallAsteroid = null;
+    private GameObject m_SmallAsteroid;
 
     [SerializeField]
     private int m_Count = 3;
 
-    private Rigidbody2D m_Rigidbody = null;
+    private Rigidbody2D m_Rigidbody;
 
     public void Start()
     {

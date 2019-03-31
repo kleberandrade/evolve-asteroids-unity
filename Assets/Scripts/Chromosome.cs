@@ -20,7 +20,7 @@ public class Chromosome
 
     public double Fitness { get; set; }
 
-    public Chromosome(int length, bool shouldInitGenes = true)
+    public Chromosome(int length)
     {
         Genes = new int[length];
         for (int i = 0; i < Length; i++)
@@ -31,9 +31,9 @@ public class Chromosome
         Fitness = 0.0f;
     }
 
-    public Chromosome Crossover(Chromosome otherParent, double crossoverRate = 0.5)
+    public Chromosome Crossover(Chromosome otherParent, double crossoverRate)
     {
-        Chromosome child = new Chromosome(Length, false);
+        Chromosome child = new Chromosome(Length);
         for (int i = 0; i < child.Length; i++)
         {
             child[i] = Helper.NextDouble() < crossoverRate ? Genes[i] : otherParent[i];

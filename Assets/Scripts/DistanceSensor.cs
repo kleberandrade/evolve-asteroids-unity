@@ -6,7 +6,7 @@ public class DistanceSensor : MonoBehaviour
     private float m_MaxDistance = 4.0f;
 
     [SerializeField]
-    private LayerMask m_LayerMask = LayerMask.GetMask("Asteroid");
+    private LayerMask m_LayerMask;
 
     [SerializeField]
     private Color m_RayColorWithCollision = Color.red;
@@ -14,7 +14,7 @@ public class DistanceSensor : MonoBehaviour
     [SerializeField]
     private Color m_RayColorWithoutCollision = Color.green;
 
-    private float m_Distance = 0.0f;
+    private float m_Distance;
 
     public bool Detected => m_Distance < m_MaxDistance;
 

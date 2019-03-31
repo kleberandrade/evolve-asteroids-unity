@@ -5,12 +5,12 @@ using UnityEngine;
 public class SensorManager : MonoBehaviour
 {
     [SerializeField]
-    private DistanceSensor m_DistanceSensorPrefab = null;
+    private DistanceSensor m_DistanceSensorPrefab;
 
     [SerializeField]
     private int m_DistanceSensorCount = 8;
 
-    private DistanceSensor[] m_Sensors = null;
+    private DistanceSensor[] m_Sensors;
 
     public void Start()
     {

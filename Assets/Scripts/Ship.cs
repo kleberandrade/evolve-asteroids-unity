@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Ship : MonoBehaviour
@@ -16,7 +17,10 @@ public class Ship : MonoBehaviour
     private AudioClip m_ShootAudioClip;
 
     [SerializeField]
-    private GameObject m_Bullet;
+    private GameObject m_BulletPrefab;
+
+    [SerializeField]
+    private GameObject m_ExplosionParticleSystem;
 
     private Rigidbody2D m_Rigidbody;
 
@@ -44,9 +48,20 @@ public class Ship : MonoBehaviour
             return;
         }
 
-        transform.position = new Vector3(0, 0, 0);
-        m_Rigidbody.velocity = new Vector3(0, 0, 0);
+        StartCoroutine(Destroy(1.0f));        
+    }
+
+    public IEnumerator Destroy(float delay)
+    {
         AudioSource.PlayClipAtPoint(m_CrashAudioClip, Camera.main.transform.position);
+        Instantiate(m_ExplosionParticleSystem, transform.position, Quaternion.identity);
+
+        GetComponent<SpriteRenderer>().enabled = false;
+
+        yield return new WaitForSeconds(delay);
+
+        transform.position = Vector3.zero;
+        m_Rigidbody.velocity = Vector3.zero;
 
         GameManager.Instance.DecrementLives();
         Destroy(gameObject);
@@ -55,7 +70,7 @@ public class Ship : MonoBehaviour
     private void ShootBullet()
     {
         Vector3 position = transform.position + transform.TransformDirection(0, 0.5f, 0);
-        Instantiate(m_Bullet, position, transform.rotation);
+        Instantiate(m_BulletPrefab, position, transform.rotation);
         AudioSource.PlayClipAtPoint(m_ShootAudioClip, Camera.main.transform.position);
     }
 }

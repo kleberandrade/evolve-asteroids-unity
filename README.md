@@ -24,13 +24,30 @@ Asteroids is a space-themed multidirectional shooter arcade game designed by Lyl
 6.  Evaluate the individual fitness of new individuals.
 7.  Replace least-fit population with new individuals.
 
-### Chromosome
+### Individual (Chromosome)
 
 A chromosome generally means a part of a gene. In the context of evolutionary algorithms, however, a chromosome represents a potential solution to the problem. Here’s an example:
 
 <p align="center">
   <img src="https://github.com/kleberandrade/evolve-asteroids/blob/master/Screenshots/chromosome.png" height="500"/>
 </p>
+
+*   Number of individuals (solutions): 179769313486231590772930519078902473361797697894230657273430081157732675805500963132708477322407536021120113879871393357658789768814416622492847430639474124377767893424865485276302219601246094119453082952085005768838150682342462881473913110540827237163350510684586298239947245938479716304835356329624224137216
+
+### Fitness Function
+
+Fitness Function (also known as the Evaluation Function) evaluates how close a given solution is to the optimum solution of the desired problem. It determines how fit a solution is.
+
+$$fitness_{chromosome} = \left( \sum_{i=0}^{N} score(asteroid_i)\right ) - \frac{time}{time_{max}}$$(1)
+
+*   **Small asteroid** destroy to earn 100 points
+*   **Large asteroid** destroy to earn 20 points
+
+### Selection
+
+### Crossover
+
+### Mutation
 
 ## Licença
 

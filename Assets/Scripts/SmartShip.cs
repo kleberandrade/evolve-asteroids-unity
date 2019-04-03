@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SmartShip : MonoBehaviour
 {
@@ -18,8 +17,6 @@ public class SmartShip : MonoBehaviour
     [SerializeField]
     private int m_ControlSize;
 
-    private int[] m_Data;
-
     public void Start()
     {
         m_SensorManager = GetComponent<SensorManager>();
@@ -27,8 +24,6 @@ public class SmartShip : MonoBehaviour
 
         m_Chromosome = new Chromosome(m_ChromosomeSize);
         
-        m_Data = new int[m_ControlSize];
-
         m_Ship.UseSmartControl = UseSmartControl;
     }
 
@@ -38,11 +33,11 @@ public class SmartShip : MonoBehaviour
         {
             int sensor = m_SensorManager.ToDecimal();
 
-            m_Data = Helper.DecimalToBinary(sensor, m_ControlSize);
+            int[] data = Helper.DecimalToBinary(sensor, m_ControlSize);
 
-            m_Ship.Fire = m_Data[0] == 1 ? true : false;
-            m_Ship.Horizontal = m_Data[1] - m_Data[2];
-            m_Ship.Vertical = m_Data[3] - m_Data[4];
+            m_Ship.Fire = data[0] == 1 ? true : false;
+            m_Ship.Horizontal = data[1] - data[2];
+            m_Ship.Vertical = data[3] - data[4];
         }
     }
 }

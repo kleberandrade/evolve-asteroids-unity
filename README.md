@@ -22,13 +22,13 @@ Asteroids is a space-themed multidirectional shooter arcade game designed by Lyl
 
 ### Implementation
 
-1.    Generate the initial population of individuals randomly. (First generation)
-2.    Evaluate the fitness of each individual in that population (time limit, sufficient fitness achieved, etc.)
-3.    Repeat the following regenerational steps until termination:
-4.    Select the best-fit individuals for reproduction. (Parents)
-5.    Breed new individuals through crossover and mutation operations to give birth to offspring.
-6.    Evaluate the individual fitness of new individuals.
-7.    Replace least-fit population with new individuals.
+1.  Generate the initial population of individuals randomly. (First generation)
+2.  Evaluate the fitness of each individual in that population (time limit, sufficient fitness achieved, etc.)
+3.  Repeat the following regenerational steps until termination:
+4.  Select the best-fit individuals for reproduction. (Parents)
+5.  Breed new individuals through crossover and mutation operations to give birth to offspring.
+6.  Evaluate the individual fitness of new individuals.
+7.  Replace least-fit population with new individuals.
 
 ### Chromosome
 

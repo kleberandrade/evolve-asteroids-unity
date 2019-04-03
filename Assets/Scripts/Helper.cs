@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 public class Helper
 {
@@ -30,5 +32,24 @@ public class Helper
     {
         InitializeRandomNumber();
         return m_Random.NextDouble();
+    }
+
+    public static int[] DecimalToBinary(int number, int size)
+    {
+        List<int> binary = new List<int>();
+
+        while (number > 0)
+        {
+            binary.Add(number % 2);
+            number = number / 2;
+        }
+
+        while (binary.Count < size)
+        {
+            binary.Add(0);
+        }
+
+        binary.Reverse();
+        return binary.ToArray();
     }
 }

@@ -15,8 +15,9 @@ GameObject:
   - component: {fileID: 1825999701}
   - component: {fileID: 6367474258967350322}
   - component: {fileID: 3246410551649881364}
+  - component: {fileID: 3516144944627750027}
   m_Layer: 0
-  m_Name: ship
+  m_Name: Ship
   m_TagString: Ship
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -180,3 +181,18 @@ MonoBehaviour:
   m_DistanceSensorPrefab: {fileID: 2720905318498821238, guid: 940b1bbab963ea94bb47686d68d739c3,
     type: 3}
   m_DistanceSensorCount: 8
+--- !u!114 &3516144944627750027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5023433477196949076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 727f382130dc4b948ba956a26818fa84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UseSmartControl: 1
+  m_ChromosomeSize: 256
+  m_ControlSize: 5

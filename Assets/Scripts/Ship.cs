@@ -22,7 +22,20 @@ public class Ship : MonoBehaviour
     [SerializeField]
     private GameObject m_ExplosionParticleSystem;
 
+    [SerializeField]
+    private float m_FireRate = 0.1f;
+
+    private float m_NextFire;
+
     private Rigidbody2D m_Rigidbody;
+
+    public bool UseSmartControl { get; set; }
+
+    public float Horizontal { get; set; }
+
+    public float Vertical { get; set; }
+
+    public bool Fire { get; set; }
 
     public void Start()
     {
@@ -31,12 +44,19 @@ public class Ship : MonoBehaviour
 
     public void FixedUpdate()
     {
-        transform.Rotate(0, 0, -Input.GetAxis("Horizontal") * m_RotationSpeed * Time.deltaTime);
-
-        m_Rigidbody.AddForce(transform.up * m_ThrustForce * Input.GetAxis("Vertical"));
-
-        if (Input.GetButtonDown("Fire1"))
+        if (!UseSmartControl)
         {
+            Horizontal = -Input.GetAxis("Horizontal");
+            Vertical = Input.GetAxis("Vertical");
+            Fire = Input.GetButtonDown("Fire1");
+        }
+
+        transform.Rotate(0, 0, Horizontal * m_RotationSpeed * Time.deltaTime);
+        m_Rigidbody.AddForce(transform.up * m_ThrustForce * Vertical);
+
+        if (Fire && Time.time > m_NextFire)
+        {
+            m_NextFire = Time.time + m_FireRate;
             ShootBullet();
         }
     }
@@ -48,17 +68,8 @@ public class Ship : MonoBehaviour
             return;
         }
 
-        StartCoroutine(Destroy(1.0f));        
-    }
-
-    public IEnumerator Destroy(float delay)
-    {
         AudioSource.PlayClipAtPoint(m_CrashAudioClip, Camera.main.transform.position);
         Instantiate(m_ExplosionParticleSystem, transform.position, Quaternion.identity);
-
-        GetComponent<SpriteRenderer>().enabled = false;
-
-        yield return new WaitForSeconds(delay);
 
         transform.position = Vector3.zero;
         m_Rigidbody.velocity = Vector3.zero;

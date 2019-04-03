@@ -9,8 +9,8 @@ public class GeneticAlgorithm
     public List<Chromosome> PopulationRandomInitialization()
     {
         List<Chromosome> population = new List<Chromosome>();
-        for (int i = 0; i < PopulationSize; i++)
-        {
+        while (population.Count < PopulationSize)
+        { 
             population.Add(new Chromosome(ChromosomeLength));
         }
 

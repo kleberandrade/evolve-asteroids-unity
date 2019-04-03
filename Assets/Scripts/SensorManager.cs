@@ -58,9 +58,4 @@ public class SensorManager : MonoBehaviour
         builder.Append(" = ").Append(ToDecimal());
         return builder.ToString();
     }
-
-    public void LateUpdate()
-    {
-        Debug.Log(ToString());
-    }
 }

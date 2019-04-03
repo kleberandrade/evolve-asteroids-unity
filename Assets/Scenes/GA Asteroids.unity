@@ -312,7 +312,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 9
+  orthographic size: 8
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -428,7 +428,9 @@ MonoBehaviour:
   m_Asteroid: {fileID: 4663329913083730064, guid: 1ee0c0c45374780499158f127279ef54,
     type: 3}
   m_Ship: {fileID: 5023433477196949076, guid: f8ec8d84f8ec55b459d63f02c5cdcfa8, type: 3}
-  m_IncreaseEachWave: 4
+  m_RestartRate: 2
+  m_Distance: 2
+  m_IncreaseEachWave: 8
 --- !u!4 &1000503073
 Transform:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -21,6 +22,12 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private GameObject m_Ship;
+
+    [SerializeField]
+    private float m_RestartRate = 2.0f;
+
+    [SerializeField]
+    private float m_Distance = 2.0f;
 
     private int m_Score;
 
@@ -58,8 +65,8 @@ public class GameManager : MonoBehaviour
         m_Score = 0;
         m_Wave = 1;
         UpdateHud();
-        SpawnShip();
         SpawnAsteroids();
+        SpawnShip();
     }
 
     public void SpawnShip()
@@ -82,12 +89,20 @@ public class GameManager : MonoBehaviour
 
         Bounds bounds = Camera.main.OrthographicBounds();
 
-        for (int i = 0; i < m_AsteroidsRemaining; i++)
+
+        int count = 0;
+        while (count < m_AsteroidsRemaining)
         {
             float x = Random.Range(bounds.min.x, bounds.max.x);
             float y = Random.Range(bounds.min.y, bounds.max.y);
 
-            Instantiate(m_Asteroid, new Vector3(x, y, 0.0f), Quaternion.Euler(0, 0, Random.Range(0.0f, 360.0f)));
+            Vector3 position = new Vector3(x, y, 0.0f);
+
+            if (Vector3.Distance(position, Vector3.zero) > m_Distance)
+            {
+                Instantiate(m_Asteroid, new Vector3(x, y, 0.0f), Quaternion.Euler(0, 0, Random.Range(0.0f, 360.0f)));
+                count++;
+            }
         }
 
         UpdateHud();
@@ -115,6 +130,12 @@ public class GameManager : MonoBehaviour
 
     public void DecrementLives()
     {
+        StartCoroutine(DelayToRestart());
+    }
+
+    public IEnumerator DelayToRestart()
+    {
+        yield return new WaitForSeconds(m_RestartRate);
         RestartGame();
     }
 
@@ -132,14 +153,15 @@ public class GameManager : MonoBehaviour
     {
         DestroyExistingAsteroids("Big Asteroid");
         DestroyExistingAsteroids("Small Asteroid");
+        DestroyExistingAsteroids("Bullet");
     }
 
     public void DestroyExistingAsteroids(string tag)
     {
-        GameObject[] asteroids = GameObject.FindGameObjectsWithTag(tag);
-        foreach (GameObject current in asteroids)
+        GameObject[] objects = GameObject.FindGameObjectsWithTag(tag);
+        foreach (GameObject obj in objects)
         {
-            Destroy(current);
+            Destroy(obj);
         }
     }
 }

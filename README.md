@@ -20,6 +20,8 @@ Asteroids is a space-themed multidirectional shooter arcade game designed by Lyl
 
 ## Evolutionary Algorithm
 
+### Implementation
+
 1.    Generate the initial population of individuals randomly. (First generation)
 2.    Evaluate the fitness of each individual in that population (time limit, sufficient fitness achieved, etc.)
 3.    Repeat the following regenerational steps until termination:
@@ -29,6 +31,8 @@ Asteroids is a space-themed multidirectional shooter arcade game designed by Lyl
 7.    Replace least-fit population with new individuals.
 
 ### Chromosome
+
+A chromosome generally means a part of a gene. In the context of evolutionary algorithms, however, a chromosome represents a potential solution to the problem. Here’s an example:
 
 <p align="center">
   <img src="https://github.com/kleberandrade/evolve-asteroids/blob/master/Screenshots/chromosome.png" height="500"/>

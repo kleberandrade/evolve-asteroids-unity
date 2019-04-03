@@ -39,7 +39,7 @@ A chromosome generally means a part of a gene. In the context of evolutionary al
 Fitness Function (also known as the Evaluation Function) evaluates how close a given solution is to the optimum solution of the desired problem. It determines how fit a solution is.
 
 <p align="center">
-  <img src="https://github.com/kleberandrade/evolve-asteroids/blob/master/Screenshots/fitness.png" height="500"/>
+  <img src="https://github.com/kleberandrade/evolve-asteroids/blob/master/Screenshots/fitness.png"/>
 </p>
 
 *   **Small asteroid** destroy to earn 100 points

@@ -38,7 +38,9 @@ A chromosome generally means a part of a gene. In the context of evolutionary al
 
 Fitness Function (also known as the Evaluation Function) evaluates how close a given solution is to the optimum solution of the desired problem. It determines how fit a solution is.
 
-$$fitness_{chromosome} = \left( \sum_{i=0}^{N} score(asteroid_i)\right ) - \frac{time}{time_{max}}$$(1)
+<p align="center">
+  <img src="https://github.com/kleberandrade/evolve-asteroids/blob/master/Screenshots/fitness.png" height="500"/>
+</p>
 
 *   **Small asteroid** destroy to earn 100 points
 *   **Large asteroid** destroy to earn 20 points

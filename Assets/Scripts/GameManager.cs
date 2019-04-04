@@ -89,7 +89,6 @@ public class GameManager : MonoBehaviour
 
         Bounds bounds = Camera.main.OrthographicBounds();
 
-
         int count = 0;
         while (count < m_AsteroidsRemaining)
         {

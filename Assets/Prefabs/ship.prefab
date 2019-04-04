@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 3246410551649881364}
   - component: {fileID: 3516144944627750027}
   m_Layer: 0
-  m_Name: Ship
+  m_Name: ship
   m_TagString: Ship
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -98,7 +98,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 1
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -147,13 +147,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_RotationSpeed: 100
-  m_ThrustForce: 3
+  m_ThrustForce: 5
   m_CrashAudioClip: {fileID: 8300000, guid: f29d49ca84dd98043a30c2bf86b86278, type: 3}
   m_ShootAudioClip: {fileID: 8300000, guid: b313a1f5468369846b0e09dc5689fa73, type: 3}
   m_BulletPrefab: {fileID: 7216880989689314378, guid: 7e1bba0cf1f9223449caa32dad3d50e1,
     type: 3}
   m_ExplosionParticleSystem: {fileID: 5804875826308633728, guid: 95d53aae6be80e54a93d745e28d7c7e1,
     type: 3}
+  m_FireRate: 0.1
 --- !u!114 &6367474258967350322
 MonoBehaviour:
   m_ObjectHideFlags: 0

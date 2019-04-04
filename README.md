@@ -32,7 +32,7 @@ A chromosome generally means a part of a gene. In the context of evolutionary al
   <img src="https://github.com/kleberandrade/evolve-asteroids/blob/master/Screenshots/chromosome.png" height="500"/>
 </p>
 
-*   Number of individuals (solutions): 179769313486231590772930519078902473361797697894230657273430081157732675805500963132708477322407536021120113879871393357658789768814416622492847430639474124377767893424865485276302219601246094119453082952085005768838150682342462881473913110540827237163350510684586298239947245938479716304835356329624224137216
+*   **Number of individuals (solutions):** 3.949366e+266 
 
 ### Fitness Function
 
@@ -45,11 +45,17 @@ Fitness Function (also known as the Evaluation Function) evaluates how close a g
 *   **Small asteroid** destroy to earn 100 points
 *   **Large asteroid** destroy to earn 20 points
 
-### Selection
+### Roulette Wheel Selection
 
-### Crossover
+In a roulette wheel selection, the circular wheel is divided as described before. A fixed point is chosen on the wheel circumference as shown and the wheel is rotated. The region of the wheel which comes in front of the fixed point is chosen as the parent. For the second parent, the same process is repeated.
 
-### Mutation
+### Uniform Crossover
+
+In a uniform crossover, we don’t divide the chromosome into segments, rather we treat each gene separately. In this, we essentially flip a coin for each chromosome to decide whether or not it’ll be included in the off-spring. We can also bias the coin to one parent, to have more genetic material in the child from that parent.
+
+### Random Resetting Mutation
+
+Random Resetting is an extension of the bit flip for the integer representation. In this, a random value from the set of permissible values is assigned to a randomly chosen gene.
 
 ## Licença
 

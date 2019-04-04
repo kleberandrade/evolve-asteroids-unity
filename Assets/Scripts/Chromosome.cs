@@ -3,7 +3,7 @@ using System.Text;
 
 public class Chromosome
 {
-    private static readonly int MAX_ALLELE = 32;
+    private static readonly int MAX_ALLELE = 12;
 
     public int[] Genes { get; private set; }
 

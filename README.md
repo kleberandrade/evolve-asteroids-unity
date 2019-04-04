@@ -53,9 +53,17 @@ In a roulette wheel selection, the circular wheel is divided as described before
 
 In a uniform crossover, we don’t divide the chromosome into segments, rather we treat each gene separately. In this, we essentially flip a coin for each chromosome to decide whether or not it’ll be included in the off-spring. We can also bias the coin to one parent, to have more genetic material in the child from that parent.
 
+<p align="center">
+  <img src="https://github.com/kleberandrade/evolve-asteroids/blob/master/Screenshots/crossover.png"/>
+</p>
+
 ### Random Resetting Mutation
 
 Random Resetting is an extension of the bit flip for the integer representation. In this, a random value from the set of permissible values is assigned to a randomly chosen gene.
+
+<p align="center">
+  <img src="https://github.com/kleberandrade/evolve-asteroids/blob/master/Screenshots/mutation.png"/>
+</p>
 
 ## Licença
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class GeneticAlgorithm
 {
@@ -15,5 +16,10 @@ public class GeneticAlgorithm
         }
 
         return population;
+    }
+
+    public void NextGeneration()
+    {
+
     }
 }

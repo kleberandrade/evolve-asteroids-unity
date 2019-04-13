@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Ship : MonoBehaviour
+public class ShipController : MonoBehaviour
 {
     [SerializeField]
     private float m_RotationSpeed = 100.0f;
@@ -29,8 +28,6 @@ public class Ship : MonoBehaviour
 
     private Rigidbody2D m_Rigidbody;
 
-    public bool UseSmartControl { get; set; }
-
     public float Horizontal { get; set; }
 
     public float Vertical { get; set; }
@@ -44,13 +41,6 @@ public class Ship : MonoBehaviour
 
     public void FixedUpdate()
     {
-        if (!UseSmartControl)
-        {
-            Horizontal = -Input.GetAxis("Horizontal");
-            Vertical = Input.GetAxis("Vertical");
-            Fire = Input.GetButtonDown("Fire1");
-        }
-
         transform.Rotate(0, 0, Horizontal * m_RotationSpeed * Time.deltaTime);
         m_Rigidbody.AddForce(transform.up * m_ThrustForce * Vertical);
 
@@ -61,13 +51,8 @@ public class Ship : MonoBehaviour
         }
     }
 
-    public void OnTriggerEnter2D(Collider2D collision)
+    public void Kill()
     {
-        if (collision.CompareTag("Bullet"))
-        {
-            return;
-        }
-
         AudioSource.PlayClipAtPoint(m_CrashAudioClip, Camera.main.transform.position);
         Instantiate(m_ExplosionParticleSystem, transform.position, Quaternion.identity);
 
@@ -76,6 +61,16 @@ public class Ship : MonoBehaviour
 
         GameManager.Instance.DecrementLives();
         Destroy(gameObject);
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Bullet"))
+        {
+            return;
+        }
+
+        Kill();   
     }
 
     private void ShootBullet()

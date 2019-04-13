@@ -18,8 +18,8 @@ public class Asteroid : MonoBehaviour
     public void Start()
     {
         Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
-        rigidbody.AddForce(transform.up * Random.Range(50.0f, 150.0f));
-        rigidbody.angularVelocity = Random.Range(-360.0f, 360.0f);
+        rigidbody.AddForce(transform.up * Random.Range(50.0f, 120.0f));
+        rigidbody.angularVelocity = Random.Range(-180.0f, 180.0f);
     }
 
     public void OnTriggerEnter2D(Collider2D collision)

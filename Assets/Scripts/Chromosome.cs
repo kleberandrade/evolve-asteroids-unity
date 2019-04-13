@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-public class Chromosome
+public class Chromosome : IComparable<Chromosome>, ICloneable
 {
     private static readonly int MAX_ALLELE = 12;
 
@@ -50,20 +50,65 @@ public class Chromosome
         }
     }
 
-    public Chromosome Clone(Chromosome chromosome)
+    public object Clone()
     {
-        Chromosome clone = new Chromosome(chromosome.Length);
-        Array.Copy(chromosome.Genes, clone.Genes, chromosome.Length);
-        return clone;
+        Chromosome chromosome = new Chromosome(Length);
+
+        chromosome.Fitness = Fitness;
+        Array.Copy(Genes, chromosome.Genes, Length);
+
+        return chromosome;
+    }
+
+    #region [ Overrides ]
+    public override bool Equals(object obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        Chromosome chromosome = (Chromosome)obj;
+        for (int i = 0; i < Length; i++)
+            if (!Genes[i].Equals(chromosome[i]))
+                return false;
+
+        return true;
+    }
+
+    public override int GetHashCode()
+    {
+        unchecked
+        {
+            int hash = 17;
+            foreach (int alelo in Genes)
+                hash = hash * alelo.GetHashCode();
+
+            return hash;
+        }
+    }
+
+    public int CompareTo(Chromosome other)
+    {
+        if (Fitness > other.Fitness)
+        {
+            return -1;
+        }
+
+        if (Fitness < other.Fitness)
+        {
+            return 1;
+        }
+
+        return 0;
     }
 
     public override string ToString()
     {
         StringBuilder builder = new StringBuilder();
         builder.Append("[");
-        Array.ForEach(Genes, x => builder.Append(x.ToString("00")).Append("|"));
+        Array.ForEach(Genes, x => builder.Append(x).Append("|"));
         builder.Remove(builder.Length - 1, 1);
-        builder.Append("]");
+        builder.Append("] = ").Append(Fitness);
         return builder.ToString();
     }
+    #endregion
 }

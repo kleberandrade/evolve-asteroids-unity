@@ -1,92 +1,229 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; }
+    public static GameManager Instance { get; private set; } = null;
 
-    [Header("UI (User Interface)")]
-    [SerializeField]
-    private Text m_ScoreText;
-
-    [SerializeField]
-    private Text m_WaveText;
-
-    [SerializeField]
-    private Text m_HiscoreText;
-
-    [Header("Prefabs")]
-    [SerializeField]
-    private GameObject m_Asteroid;
-
-    [SerializeField]
-    private GameObject m_Ship;
-
-    [SerializeField]
-    private float m_RestartRate = 2.0f;
-
-    [SerializeField]
-    private float m_Distance = 2.0f;
-
-    private int m_Score;
-
-    private int m_Highscore;
-
-    private int m_AsteroidsRemaining;
-
-    private int m_Wave;
-
-    [SerializeField]
-    private int m_IncreaseEachWave = 4;
-
-    private const string k_HighscoreKey = "highscore";
-
-    public void Awake()
+    private void Awake()
     {
         if (Instance != null)
-        {
             Destroy(gameObject);
-        }
         else
-        {
             Instance = this;
-        }
     }
+
+    [Header("UI (User Interface)")]
+    public Text m_ScoreText;
+    public Text m_HighscoreText;
+    public Text m_WaveText;
+    public Text m_TimeText;
+    public Text m_GenerationText;
+    public Text m_ChromosomeText;
+
+    [Header("Prefabs")]
+    public GameObject m_Asteroid;
+    public GameObject m_Ship;
+
+    [Header("Gameplay")]
+    public float m_MaxTime = 15.0f;
+    public int m_IncreaseEachWave = 8;
+    public float m_RespawnDistance = 2.5f;
+    public float m_RespawnTime = 2.0f;
+
+    [Header("Genetic Properties")]
+    public int m_PopulationSize = 100;
+    [Range(0, 10)] public int m_TournamentSelectionSize = 3;
+    [Range(0.0f, 1.0f)] public float m_CrossoverRate = 0.5f;
+    [Range(0.0f, 1.0f)] public float m_MutationRate = 0.02f;
+    public int m_MaxGeneration = 10;
+    [Range(0.0f, 1.0f)] public float m_ElitismRate = 0.05f;
+    public string m_FileName = "teste";
+
+    private int m_ChromosomeLength = 256;
+    private List<Chromosome> m_Population = new List<Chromosome>();
+    private int m_CurrentChromosome;
+    private int m_CurrentGeneration;
+    private float m_Time;
+    private int m_Score;
+    private int m_Highscore;
+    private int m_Wave;
+    private int m_AsteroidsRemaining;
+    private const string k_HighscoreKey = "highscore";
+    private bool m_Run = false;
+
+    private IEnumerator m_ResetCoroutine;
 
     public void Start()
     {
-        RestartGame();
+        m_Population = PopulationRandomInitialize();
+
+        m_ResetCoroutine = ResetGame(false);
+        StartCoroutine(m_ResetCoroutine);
     }
 
-    public void RestartGame()
+    public List<Chromosome> PopulationRandomInitialize()
     {
+        List<Chromosome> population = new List<Chromosome>();
+        while (population.Count < m_PopulationSize)
+        {
+            Chromosome chromosome = new Chromosome(m_ChromosomeLength);
+            population.Add(chromosome);
+        }
+        return population;
+    }
+
+    public Chromosome TournamentSelection()
+    {
+        List<Chromosome> chromosomes = new List<Chromosome>();
+        for (int i = 0; i < m_TournamentSelectionSize; i++)
+        {
+            int index = Helper.NextInt(m_PopulationSize);
+            Chromosome chromosome = m_Population[index].Clone() as Chromosome;
+            chromosomes.Add(chromosome);
+        }
+
+        chromosomes.Sort();
+        return chromosomes[0];
+    }
+
+    public IEnumerator ResetGame(bool useRespawnTime)
+    {
+        if (useRespawnTime)
+        {
+            yield return new WaitForSeconds(m_RespawnTime);
+        }
+
         m_Highscore = PlayerPrefs.GetInt(k_HighscoreKey, 0);
         m_Score = 0;
         m_Wave = 1;
-        UpdateHud();
-        SpawnAsteroids();
-        SpawnShip();
-    }
+        m_Time = 0;
 
-    public void SpawnShip()
-    {
-        Instantiate(m_Ship, Vector3.zero, Quaternion.identity);
+        UpdateHud();
+
+        SpawnShip();
+
+        SpawnAsteroids();
+
+        m_Run = true;
+
+        yield return null;
     }
 
     public void UpdateHud()
     {
         m_ScoreText.text = $"SCORE: {m_Score}";
-        m_HiscoreText.text = $"HIGHSCORE: {m_Highscore}";
-        m_WaveText.text = $"WAVE: {m_Wave}";
+        m_HighscoreText.text = "HIGHSCORE: " + m_Highscore;
+        m_WaveText.text = string.Format("WAVE: {0}", m_Wave);
+        m_TimeText.text = $"TIME {(m_MaxTime - m_Time).ToString("0")}";
+        m_GenerationText.text = $"GENERATION {m_CurrentGeneration + 1} / {m_MaxGeneration}";
+        m_ChromosomeText.text = $"CHROMOSOME {m_CurrentChromosome + 1} / {m_PopulationSize}";
     }
 
-    public void SpawnAsteroids()
+    public List<Chromosome> Elitism()
     {
-        DestroyAllExistingAsteroids();
+        m_Population.Sort();
+        int length = (int)(m_PopulationSize * m_ElitismRate);
 
-        m_AsteroidsRemaining = (m_Wave * m_IncreaseEachWave);
+        List<Chromosome> chromosomes = new List<Chromosome>();
+        for (int i = 0; i < length; i++)
+        {
+            chromosomes.Add(m_Population[i].Clone() as Chromosome);
+        }
 
+        return chromosomes;
+    }
+
+    public void Save(bool append)
+    {
+        using (StreamWriter file = new StreamWriter(m_FileName + ".xls", append))
+        {
+            double bestFitness = 0.0;
+            double averageFitness = 0.0;
+            for (int i = 0; i < m_PopulationSize; i++)
+            {
+                averageFitness += m_Population[i].Fitness;
+                if (bestFitness < m_Population[i].Fitness)
+                {
+                    bestFitness = m_Population[i].Fitness;
+                }
+            }
+
+            averageFitness /= (double)m_PopulationSize;
+            file.WriteLine("{0}\t{1}", averageFitness, bestFitness);
+        }
+    }
+
+    public IEnumerator QuitGame()
+    {
+        yield return new WaitForSeconds(m_RespawnTime);
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
+
+    public bool IsContinue => m_CurrentGeneration < m_MaxGeneration;
+
+    public void NextGeneration()
+    {
+        Save(m_CurrentGeneration > 0);
+        m_CurrentGeneration++;
+        if (m_CurrentGeneration == m_MaxGeneration)
+        {
+            StartCoroutine(QuitGame());
+        }
+        else
+        {
+            List<Chromosome> newPopulation = Elitism();
+            while (newPopulation.Count < m_PopulationSize)
+            {
+                Chromosome parent1 = TournamentSelection();
+                Chromosome parent2 = TournamentSelection();
+
+                Chromosome offspring = parent1.Crossover(parent2, m_CrossoverRate);
+                offspring.Mutate(m_MutationRate);
+
+                newPopulation.Add(offspring);
+            }
+            m_Population = new List<Chromosome>(newPopulation);
+            m_CurrentChromosome = 0;
+        }
+    }
+
+    private void Update()
+    {
+        if (m_Run)
+        {
+            m_Time = Mathf.Clamp(m_Time + Time.deltaTime, 0, m_MaxTime);
+            UpdateHud();
+
+            if (m_Time >= m_MaxTime)
+            {
+                m_Run = false;
+                GameObject ship = GameObject.FindGameObjectWithTag("Ship");
+                ShipController shipController = ship.GetComponent<ShipController>();
+                shipController.Kill();
+            }
+        }
+    }
+
+    private void SpawnShip()
+    {
+        GameObject ship = Instantiate(m_Ship, Vector3.zero, Quaternion.identity);
+        Brain brain = ship.GetComponent<Brain>();
+        brain.Chromosome = m_Population[m_CurrentChromosome];
+    }
+
+    private void SpawnAsteroids()
+    {
+        DestroyExistingObjects();
+
+        m_AsteroidsRemaining = m_Wave * m_IncreaseEachWave;
         Bounds bounds = Camera.main.OrthographicBounds();
 
         int count = 0;
@@ -95,23 +232,73 @@ public class GameManager : MonoBehaviour
             float x = Random.Range(bounds.min.x, bounds.max.x);
             float y = Random.Range(bounds.min.y, bounds.max.y);
 
-            Vector3 position = new Vector3(x, y, 0.0f);
-
-            if (Vector3.Distance(position, Vector3.zero) > m_Distance)
+            if (Vector3.Distance(new Vector3(x, y, 0), Vector3.zero) > m_RespawnDistance)
             {
-                Instantiate(m_Asteroid, new Vector3(x, y, 0.0f), Quaternion.Euler(0, 0, Random.Range(0.0f, 360.0f)));
                 count++;
+                float angle = Random.Range(0.0f, 360.0f);
+                Instantiate(m_Asteroid, new Vector3(x, y, 0), Quaternion.Euler(0, 0, angle));
             }
         }
 
         UpdateHud();
     }
 
- 
+    private void DestroyExistingObjects()
+    {
+        DestroyExistingObjects("Big Asteroid");
+        DestroyExistingObjects("Small Asteroid");
+        DestroyExistingObjects("Bullet");
+    }
+
+    private void DestroyExistingObjects(string tag)
+    {
+        GameObject[] objects = GameObject.FindGameObjectsWithTag(tag);
+        foreach (var obj in objects)
+            Destroy(obj);
+    }
+
+    public void SplitAsteroid(int size)
+    {
+        m_AsteroidsRemaining += size;
+    }
+
+    public void DecrementAsteroids()
+    {
+        m_AsteroidsRemaining--;
+    }
+
+    public double EvaluationFitness()
+    {
+        return m_Score;
+    }
+
+    public void DecrementLives()
+    {
+        m_Run = false;
+        m_Population[m_CurrentChromosome].Fitness = EvaluationFitness();
+
+        m_CurrentChromosome++;
+        if (m_CurrentChromosome == m_PopulationSize)
+        {
+            NextGeneration();
+            if (m_CurrentGeneration < m_MaxGeneration)
+            {
+                StopCoroutine(m_ResetCoroutine);
+                m_ResetCoroutine = ResetGame(true);
+                StartCoroutine(m_ResetCoroutine);
+            }
+        }
+        else
+        {
+            StopCoroutine(m_ResetCoroutine);
+            m_ResetCoroutine = ResetGame(true);
+            StartCoroutine(m_ResetCoroutine);
+        }
+    }
+
     public void IncrementScore(int score)
     {
         m_Score += score;
-
         if (m_Score > m_Highscore)
         {
             PlayerPrefs.SetInt(k_HighscoreKey, m_Score);
@@ -120,47 +307,10 @@ public class GameManager : MonoBehaviour
 
         UpdateHud();
 
-        if (m_AsteroidsRemaining < 1)
+        if (m_AsteroidsRemaining == 0)
         {
             m_Wave++;
             SpawnAsteroids();
-        }
-    }
-
-    public void DecrementLives()
-    {
-        StartCoroutine(DelayToRestart());
-    }
-
-    public IEnumerator DelayToRestart()
-    {
-        yield return new WaitForSeconds(m_RestartRate);
-        RestartGame();
-    }
-
-    public void DecrementAsteroids()
-    {
-        m_AsteroidsRemaining--;
-    }
-
-    public void SplitAsteroid(int size)
-    {
-        m_AsteroidsRemaining += size;
-    }
-
-    public void DestroyAllExistingAsteroids()
-    {
-        DestroyExistingAsteroids("Big Asteroid");
-        DestroyExistingAsteroids("Small Asteroid");
-        DestroyExistingAsteroids("Bullet");
-    }
-
-    public void DestroyExistingAsteroids(string tag)
-    {
-        GameObject[] objects = GameObject.FindGameObjectsWithTag(tag);
-        foreach (GameObject obj in objects)
-        {
-            Destroy(obj);
         }
     }
 }

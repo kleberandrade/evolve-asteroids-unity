@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Text;
 
-public class Chromosome : IComparable<Chromosome>, ICloneable
+public class Chromosome : IComparable<Chromosome>, IEquatable<Chromosome>, ICloneable
 {
-    private static readonly int MAX_ALLELE = 12;
+    private static readonly int k_MaxAllele = 12;
 
     public int[] Genes { get; private set; }
 
@@ -25,7 +25,7 @@ public class Chromosome : IComparable<Chromosome>, ICloneable
         Genes = new int[length];
         for (int i = 0; i < Length; i++)
         {
-            Genes[i] = Helper.NextInt(MAX_ALLELE);
+            Genes[i] = Helper.NextInt(k_MaxAllele);
         }
 
         Fitness = 0.0f;
@@ -46,7 +46,7 @@ public class Chromosome : IComparable<Chromosome>, ICloneable
     {
         for (int i = 0; i < Length; i++)
         {
-            Genes[i] = Helper.NextDouble() < mutationRate ? Helper.NextInt(MAX_ALLELE) : Genes[i];
+            Genes[i] = Helper.NextDouble() < mutationRate ? Helper.NextInt(k_MaxAllele) : Genes[i];
         }
     }
 
@@ -58,24 +58,6 @@ public class Chromosome : IComparable<Chromosome>, ICloneable
         Array.Copy(Genes, chromosome.Genes, Length);
 
         return chromosome;
-    }
-
-    #region [ Overrides ]
-    public override bool Equals(object obj)
-    {
-        if (obj == null || GetType() != obj.GetType())
-            return false;
-
-        Chromosome chromosome = (Chromosome)obj;
-        for (int i = 0; i < Length; i++)
-        {
-            if (!Genes[i].Equals(chromosome[i]))
-            {
-                return false;
-            }
-        }
-
-        return true;
     }
 
     public override int GetHashCode()
@@ -116,5 +98,21 @@ public class Chromosome : IComparable<Chromosome>, ICloneable
         builder.Append("] = ").Append(Fitness);
         return builder.ToString();
     }
-    #endregion
+
+    public bool Equals(Chromosome other)
+    {
+        if (other == null || GetType() != other.GetType())
+            return false;
+
+        Chromosome chromosome = (Chromosome)other;
+        for (int i = 0; i < Length; i++)
+        {
+            if (!Genes[i].Equals(chromosome[i]))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

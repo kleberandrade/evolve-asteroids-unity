@@ -6,9 +6,10 @@ public class Brain : MonoBehaviour
     public Chromosome Chromosome { get; set; }
 
     private SensorManager m_SensorManager;
+
     private ShipController m_ShipController;
 
-    private readonly Dictionary<int, int[]> Commands = new Dictionary<int, int[]>()
+    private static readonly Dictionary<int, int[]> Commands = new Dictionary<int, int[]>()
     {
         [0] = new int[] { 0, 0, 0 },
         [1] = new int[] { 1, 0, 0 },

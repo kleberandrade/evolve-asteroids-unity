@@ -6,14 +6,18 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; } = null;
+    public static GameManager Instance { get; private set; }
 
-    private void Awake()
+    public void Awake()
     {
         if (Instance != null)
+        {
             Destroy(gameObject);
+        }
         else
+        {
             Instance = this;
+        }
     }
 
     [Header("UI (User Interface)")]
@@ -74,7 +78,7 @@ public class GameManager : MonoBehaviour
     private int m_Highscore;
     private int m_Wave;
     private int m_AsteroidsRemaining;
-    private bool m_Run = false;
+    private bool m_Run;
 
     private readonly int k_ChromosomeLength = 256;
     private readonly string k_HighscoreKey = "highscore";
@@ -226,7 +230,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Update()
+    public void Update()
     {
         if (m_Run)
         {
@@ -285,7 +289,9 @@ public class GameManager : MonoBehaviour
     {
         GameObject[] objects = GameObject.FindGameObjectsWithTag(tag);
         foreach (var obj in objects)
+        {
             Destroy(obj);
+        }
     }
 
     public void SplitAsteroid(int size)

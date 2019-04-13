@@ -2,7 +2,7 @@
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/1dbdbbd63639406d9a82ef0feb640d16)](https://www.codacy.com/app/kleberandrade/evolve-asteroids?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kleberandrade/evolve-asteroids&amp;utm_campaign=Badge_Grade)
 
-An asteroids like game powered by artificial intelligence enhanced with evolutionary algorithms.
+An asteroids like game powered by artificial intelligence enhanced with evolutionary algorithms. Project developed in the discipline of Artificial Intelligence applied to the Digital Games - Fatec Americana
 
 ## Asteroids
 
@@ -12,7 +12,7 @@ Asteroids is a space-themed multidirectional shooter arcade game designed by Lyl
   <img src="https://github.com/kleberandrade/evolve-asteroids/blob/master/Screenshots/game.PNG" height="500"/>
 </p>
 
-## Evolutionary Algorithm
+## Evolutionary Algorithm (EA)
 
 ### Implementation
 
@@ -45,9 +45,17 @@ Fitness Function (also known as the Evaluation Function) evaluates how close a g
 *   **Small asteroid** destroy to earn 100 points
 *   **Large asteroid** destroy to earn 20 points
 
-### Roulette Wheel Selection
+### Elitism
 
-In a roulette wheel selection, the circular wheel is divided as described before. A fixed point is chosen on the wheel circumference as shown and the wheel is rotated. The region of the wheel which comes in front of the fixed point is chosen as the parent. For the second parent, the same process is repeated.
+A practical variant of the general process of constructing a new population is to allow the best organism(s) from the current generation to carry over to the next, unaltered. This strategy is known as elitist selection and guarantees that the solution quality obtained by the EA will not decrease from one generation to the next.
+
+### Tournament Selection
+
+Tournament Selection is a Selection Strategy used for selecting the fittest candidates from the current generation in a Genetic Algorithm. These selected candidates are then passed on to the next generation. In a K-way tournament selection, we select k-individuals and run a tournament among them. Only the fittest candidate amongst those selected candidates is chosen and is passed on to the next generation. In this way many such tournaments take place and we have our final selection of candidates who move on to the next generation. It also has a parameter called the selection pressure which is a probabilistic measure of a candidate’s likelihood of participation in a tournament. If the tournament size is larger, weak candidates have a smaller chance of getting selected as it has to compete with a stronger candidate. The selection pressure parameter determines the rate of convergence of the GA. More the selection pressure more will be the Convergence rate. GAs are able to identify optimal or near-optimal solutions over a wide range of selection pressures. Tournament Selection also works for negative fitness values.
+
+1.  Select k individuals from the population and perform a tournament amongst them
+2.  Select the best individual from the k individuals
+3.  Repeat process 1 and 2 until you have the desired amount of population
 
 ### Uniform Crossover
 
@@ -65,9 +73,19 @@ Random Resetting is an extension of the bit flip for the integer representation.
   <img src="https://github.com/kleberandrade/evolve-asteroids/blob/master/Screenshots/mutation.png"/>
 </p>
 
+## Video
+
+[![Evolve Asteroids](http://img.youtube.com/vi/NWHWYv-aA-w/0.jpg)](http://www.youtube.com/watch?v=NWHWYv-aA-w "Evolve Asteroids")
+
+## References
+
+*   **ANDRADE, KLEBER O.**; JOAQUIM, RICARDO C. ; CAURIN, GLAUCO A. P. ; CROCOMO, MARCIO K. . Evolutionary Algorithms for a Better Gaming Experience in Rehabilitation Robotics. COMPUTERS IN ENTERTAINMENT, v. 16, p. 1-15, 2018.
+*   GARCIA, B. E. R. ; **ANDRADE, K. O.** ; CROCOMO, M. . Dynamic Difficulty Adjustment in a Whac-A-Mole like Game. In: Simpósio Brasileiro de Games e Entretenimento Digital (SBGames), 2018, Foz do Igua¸cu ? PR. XVII Simpósio Brasileiro de Games e Entretenimento Digital, 2018.
+*   **ANDRADE, KLEBER DE O.**; PASQUAL, THALES B. ; CAURIN, GLAUCO A. P. ; CROCOMO, MARCIO K. . Dynamic difficulty adjustment with Evolutionary Algorithm in games for rehabilitation robotics. In: 2016 IEEE International Conference on Serious Games and Applications for Health (SeGAH), 2016, Orlando. 2016 IEEE International Conference on Serious Games and Applications for Health (SeGAH). p. 1-8. 
+
 ## Licença
 
-    Copyright 2018 Kleber de Oliveira Andrade
+    Copyright 2019 Kleber de Oliveira Andrade
     
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal

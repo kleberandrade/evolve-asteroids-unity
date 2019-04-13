@@ -8,7 +8,7 @@ public class Brain : MonoBehaviour
     private SensorManager m_SensorManager;
     private ShipController m_ShipController;
 
-    private Dictionary<int, int[]> Commands = new Dictionary<int, int[]>()
+    private readonly Dictionary<int, int[]> Commands = new Dictionary<int, int[]>()
     {
         [0] = new int[] { 0, 0, 0 },
         [1] = new int[] { 1, 0, 0 },
@@ -24,13 +24,13 @@ public class Brain : MonoBehaviour
         [11] = new int[] { 1, -1, 1 },
     };
 
-    private void Awake()
+    public void Awake()
     {
         m_SensorManager = GetComponent<SensorManager>();
         m_ShipController = GetComponent<ShipController>();
     }
 
-    private void Update()
+    public void Update()
     {
         if (Chromosome != null)
         {

@@ -68,8 +68,12 @@ public class Chromosome : IComparable<Chromosome>, ICloneable
 
         Chromosome chromosome = (Chromosome)obj;
         for (int i = 0; i < Length; i++)
+        {
             if (!Genes[i].Equals(chromosome[i]))
+            {
                 return false;
+            }
+        }
 
         return true;
     }
@@ -80,7 +84,9 @@ public class Chromosome : IComparable<Chromosome>, ICloneable
         {
             int hash = 17;
             foreach (int alelo in Genes)
+            {
                 hash = hash * alelo.GetHashCode();
+            }
 
             return hash;
         }

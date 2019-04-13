@@ -17,33 +17,55 @@ public class GameManager : MonoBehaviour
     }
 
     [Header("UI (User Interface)")]
-    public Text m_ScoreText;
-    public Text m_HighscoreText;
-    public Text m_WaveText;
-    public Text m_TimeText;
-    public Text m_GenerationText;
-    public Text m_ChromosomeText;
+    [SerializeField]
+    private Text m_ScoreText;
+    [SerializeField]
+    private Text m_HighscoreText;
+    [SerializeField]
+    private Text m_WaveText;
+    [SerializeField]
+    private Text m_TimeText;
+    [SerializeField]
+    private Text m_GenerationText;
+    [SerializeField]
+    private Text m_ChromosomeText;
 
     [Header("Prefabs")]
-    public GameObject m_Asteroid;
-    public GameObject m_Ship;
+    [SerializeField]
+    private GameObject m_Asteroid;
+    [SerializeField]
+    private GameObject m_Ship;
 
     [Header("Gameplay")]
-    public float m_MaxTime = 15.0f;
-    public int m_IncreaseEachWave = 8;
-    public float m_RespawnDistance = 2.5f;
-    public float m_RespawnTime = 2.0f;
+    [SerializeField]
+    private float m_MaxTime = 15.0f;
+    [SerializeField]
+    private int m_IncreaseEachWave = 8;
+    [SerializeField]
+    private float m_RespawnDistance = 2.5f;
+    [SerializeField]
+    private float m_RespawnTime = 2.0f;
 
     [Header("Genetic Properties")]
-    public int m_PopulationSize = 100;
-    [Range(0, 10)] public int m_TournamentSelectionSize = 3;
-    [Range(0.0f, 1.0f)] public float m_CrossoverRate = 0.5f;
-    [Range(0.0f, 1.0f)] public float m_MutationRate = 0.02f;
-    public int m_MaxGeneration = 10;
-    [Range(0.0f, 1.0f)] public float m_ElitismRate = 0.05f;
-    public string m_FileName = "teste";
+    [SerializeField]
+    private int m_PopulationSize = 100;
+    [Range(0, 10)]
+    [SerializeField]
+    private int m_TournamentSelectionSize = 3;
+    [Range(0.0f, 1.0f)]
+    [SerializeField]
+    private float m_CrossoverRate = 0.5f;
+    [Range(0.0f, 1.0f)]
+    [SerializeField]
+    private float m_MutationRate = 0.02f;
+    [SerializeField]
+    private int m_MaxGeneration = 10;
+    [Range(0.0f, 1.0f)]
+    [SerializeField]
+    private float m_ElitismRate = 0.05f;
+    [SerializeField]
+    private string m_FileName = "teste";
 
-    private int m_ChromosomeLength = 256;
     private List<Chromosome> m_Population = new List<Chromosome>();
     private int m_CurrentChromosome;
     private int m_CurrentGeneration;
@@ -52,8 +74,10 @@ public class GameManager : MonoBehaviour
     private int m_Highscore;
     private int m_Wave;
     private int m_AsteroidsRemaining;
-    private const string k_HighscoreKey = "highscore";
     private bool m_Run = false;
+
+    private readonly int k_ChromosomeLength = 256;
+    private readonly string k_HighscoreKey = "highscore";
 
     private IEnumerator m_ResetCoroutine;
 
@@ -70,7 +94,7 @@ public class GameManager : MonoBehaviour
         List<Chromosome> population = new List<Chromosome>();
         while (population.Count < m_PopulationSize)
         {
-            Chromosome chromosome = new Chromosome(m_ChromosomeLength);
+            Chromosome chromosome = new Chromosome(k_ChromosomeLength);
             population.Add(chromosome);
         }
         return population;
@@ -126,6 +150,13 @@ public class GameManager : MonoBehaviour
     public List<Chromosome> Elitism()
     {
         m_Population.Sort();
+
+
+        for (int i = 0; i < m_PopulationSize; i++)
+        {
+            Debug.Log(m_Population[i].Fitness);
+        }
+
         int length = (int)(m_PopulationSize * m_ElitismRate);
 
         List<Chromosome> chromosomes = new List<Chromosome>();

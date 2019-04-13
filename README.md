@@ -75,9 +75,7 @@ Random Resetting is an extension of the bit flip for the integer representation.
 
 ## Video
 
-<p align="center">
-  [![Evolve Asteroids](http://img.youtube.com/vi/NWHWYv-aA-w/0.jpg)](http://www.youtube.com/watch?v=NWHWYv-aA-w "Evolve Asteroids")
-</p>
+[![Evolve Asteroids](http://img.youtube.com/vi/NWHWYv-aA-w/0.jpg)](http://www.youtube.com/watch?v=NWHWYv-aA-w "Evolve Asteroids")
 
 ## References
 

@@ -99,6 +99,7 @@ Initial setup of the first experiment
 *   **ANDRADE, KLEBER O.**; JOAQUIM, RICARDO C. ; CAURIN, GLAUCO A. P. ; CROCOMO, MARCIO K. . Evolutionary Algorithms for a Better Gaming Experience in Rehabilitation Robotics. COMPUTERS IN ENTERTAINMENT, v. 16, p. 1-15, 2018.
 *   GARCIA, B. E. R. ; **ANDRADE, K. O.** ; CROCOMO, M. . Dynamic Difficulty Adjustment in a Whac-A-Mole like Game. In: Simpósio Brasileiro de Games e Entretenimento Digital (SBGames), 2018, Foz do Igua¸cu ? PR. XVII Simpósio Brasileiro de Games e Entretenimento Digital, 2018.
 *   **ANDRADE, KLEBER DE O.**; PASQUAL, THALES B. ; CAURIN, GLAUCO A. P. ; CROCOMO, MARCIO K. . Dynamic difficulty adjustment with Evolutionary Algorithm in games for rehabilitation robotics. In: 2016 IEEE International Conference on Serious Games and Applications for Health (SeGAH), 2016, Orlando. 2016 IEEE International Conference on Serious Games and Applications for Health (SeGAH). p. 1-8. 
+*   **ANDRADE, K. O.**; SILVA, A. E. A. ; CROCOMO, M. . Um Algoritmo Evolutivo para a Adaptação de NPCs em um Jogo de Ação. In: I Simpósio Santa Catarina Games, 2009, Florianópolis. Anais do I Simpósio Santa Catarina Games - SCGAMES, 2009.
 
 ## Licença
 

@@ -99,15 +99,28 @@ public class Chromosome : IComparable<Chromosome>, IEquatable<Chromosome>, IClon
         return builder.ToString();
     }
 
-    public bool Equals(Chromosome other)
+    public override bool Equals(object obj)
     {
-        if (other == null || GetType() != other.GetType())
+        if (obj == null || GetType() != obj.GetType())
             return false;
 
-        Chromosome chromosome = (Chromosome)other;
+        Chromosome chromosome = (Chromosome)obj;
         for (int i = 0; i < Length; i++)
         {
             if (!Genes[i].Equals(chromosome[i]))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public bool Equals(Chromosome other)
+    {
+        for (int i = 0; i < Length; i++)
+        {
+            if (!Genes[i].Equals(other[i]))
             {
                 return false;
             }

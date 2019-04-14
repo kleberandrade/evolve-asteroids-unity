@@ -99,9 +99,12 @@ public class GameManager : MonoBehaviour
         while (population.Count < m_PopulationSize)
         {
             Chromosome chromosome = new Chromosome(k_ChromosomeLength);
-            population.Add(chromosome);
+            if (!population.Contains(chromosome))
+            {
+                population.Add(chromosome);
+            }
         }
-        return population;
+        return new List<Chromosome>(population);
     }
 
     public Chromosome TournamentSelection()
@@ -154,13 +157,6 @@ public class GameManager : MonoBehaviour
     public List<Chromosome> Elitism()
     {
         m_Population.Sort();
-
-
-        for (int i = 0; i < m_PopulationSize; i++)
-        {
-            Debug.Log(m_Population[i].Fitness);
-        }
-
         int length = (int)(m_PopulationSize * m_ElitismRate);
 
         List<Chromosome> chromosomes = new List<Chromosome>();
@@ -214,7 +210,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            List<Chromosome> newPopulation = Elitism();
+            List<Chromosome> newPopulation = new List<Chromosome>(Elitism());
             while (newPopulation.Count < m_PopulationSize)
             {
                 Chromosome parent1 = TournamentSelection();
@@ -223,7 +219,10 @@ public class GameManager : MonoBehaviour
                 Chromosome offspring = parent1.Crossover(parent2, m_CrossoverRate);
                 offspring.Mutate(m_MutationRate);
 
-                newPopulation.Add(offspring);
+                if (!newPopulation.Contains(offspring))
+                {
+                    newPopulation.Add(offspring);
+                }
             }
             m_Population = new List<Chromosome>(newPopulation);
             m_CurrentChromosome = 0;

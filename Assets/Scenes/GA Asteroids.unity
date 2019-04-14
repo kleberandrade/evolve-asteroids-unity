@@ -538,14 +538,14 @@ MonoBehaviour:
     type: 3}
   m_Ship: {fileID: 5023433477196949076, guid: f8ec8d84f8ec55b459d63f02c5cdcfa8, type: 3}
   m_MaxTime: 10
-  m_IncreaseEachWave: 30
-  m_RespawnDistance: 2.5
+  m_IncreaseEachWave: 20
+  m_RespawnDistance: 3
   m_RespawnTime: 1
-  m_PopulationSize: 5
+  m_PopulationSize: 100
   m_TournamentSelectionSize: 3
   m_CrossoverRate: 0.5
-  m_MutationRate: 0.02
-  m_MaxGeneration: 10
+  m_MutationRate: 0.05
+  m_MaxGeneration: 20
   m_ElitismRate: 0.05
   m_FileName: teste
 --- !u!4 &1000503073

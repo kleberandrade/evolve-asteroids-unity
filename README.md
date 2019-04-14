@@ -73,9 +73,26 @@ Random Resetting is an extension of the bit flip for the integer representation.
   <img src="https://github.com/kleberandrade/evolve-asteroids/blob/master/Screenshots/mutation.png"/>
 </p>
 
-## Video
+## Experiments and Results
 
-[![Evolve Asteroids](http://img.youtube.com/vi/NWHWYv-aA-w/0.jpg)](http://www.youtube.com/watch?v=NWHWYv-aA-w "Evolve Asteroids")
+To see the video of the game [click here](http://img.youtube.com/vi/NWHWYv-aA-w/0.jpg).
+
+Initial setup of the first experiment
+
+| Variable         	| Value 	|
+|------------------	|:-----:	|
+| Population size  	|  100  	|
+| Elitism          	|   5%  	|
+| Crossover rate   	|  50%  	|
+| Mutation rate    	|   5%  	|
+| Max generation   	|   20  	|
+| Tournament size  	|   3   	|
+| Max game time    	|   10  	|
+| Asteroids number 	|   20  	|
+
+<p align="center">
+  <img src="https://github.com/kleberandrade/evolve-asteroids/blob/master/Screenshots/results_1.png"/>
+</p>
 
 ## References
 

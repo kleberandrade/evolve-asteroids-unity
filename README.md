@@ -91,7 +91,7 @@ Initial setup of the first experiment
 | Asteroids number 	|   20  	|
 
 <p align="center">
-  <img src="https://github.com/kleberandrade/evolve-asteroids/blob/master/Screenshots/results_1.png"/>
+  <img src="https://github.com/kleberandrade/evolve-asteroids/blob/master/Screenshots/results_1.jpeg"/>
 </p>
 
 ## References

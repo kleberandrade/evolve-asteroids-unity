@@ -20,6 +20,8 @@ public class Chromosome : IComparable<Chromosome>, IEquatable<Chromosome>, IClon
 
     public double Fitness { get; set; }
 
+    public int Survived { get; set; }
+
     public Chromosome(int length)
     {
         Genes = new int[length];
@@ -29,6 +31,15 @@ public class Chromosome : IComparable<Chromosome>, IEquatable<Chromosome>, IClon
         }
 
         Fitness = 0.0f;
+        Survived = 0;
+    }
+
+    public Chromosome(Chromosome chromosome)
+    {
+        Genes = new int[chromosome.Length];
+        Array.Copy(chromosome.Genes, Genes, Length);
+        Fitness = chromosome.Fitness;
+        Survived = chromosome.Survived;
     }
 
     public Chromosome Crossover(Chromosome otherParent, double crossoverRate)
@@ -52,12 +63,7 @@ public class Chromosome : IComparable<Chromosome>, IEquatable<Chromosome>, IClon
 
     public object Clone()
     {
-        Chromosome chromosome = new Chromosome(Length);
-
-        chromosome.Fitness = Fitness;
-        Array.Copy(Genes, chromosome.Genes, Length);
-
-        return chromosome;
+        return new Chromosome(this);
     }
 
     public override int GetHashCode()
@@ -93,9 +99,9 @@ public class Chromosome : IComparable<Chromosome>, IEquatable<Chromosome>, IClon
     {
         StringBuilder builder = new StringBuilder();
         builder.Append("[");
-        Array.ForEach(Genes, x => builder.Append(x).Append("|"));
+        Array.ForEach(Genes, x => builder.Append(x.ToString("00")).Append("|"));
         builder.Remove(builder.Length - 1, 1);
-        builder.Append("] = ").Append(Fitness);
+        builder.Append("]");
         return builder.ToString();
     }
 

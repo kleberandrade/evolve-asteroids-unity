@@ -15,11 +15,23 @@ public class Asteroid : MonoBehaviour
     [SerializeField]
     private int m_Count = 3;
 
+    [SerializeField]
+    private float m_MinLinearVelocity = 30.0f;
+
+    [SerializeField]
+    private float m_MaxLinearVelocity = 100.0f;
+
+    [SerializeField]
+    private float m_MinAngularVelocity = -180.0f;
+
+    [SerializeField]
+    private float m_MaxAngularVelocity = 180.0f;
+
     public void Start()
     {
         Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
-        rigidbody.AddForce(transform.up * Random.Range(50.0f, 120.0f));
-        rigidbody.angularVelocity = Random.Range(-180.0f, 180.0f);
+        rigidbody.AddForce(transform.up * Random.Range(m_MinLinearVelocity, m_MaxLinearVelocity));
+        rigidbody.angularVelocity = Random.Range(m_MinAngularVelocity, m_MaxAngularVelocity);
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -36,7 +48,7 @@ public class Asteroid : MonoBehaviour
         {
             for (int i = 0; i < m_Count; i++)
             {
-                Instantiate(m_SmallAsteroid, transform.position, Quaternion.Euler(0, 0, Random.Range(0.0f, 360.0f)));
+                Instantiate(m_SmallAsteroid, transform.position, Quaternion.Euler(0, 0, Random.Range(m_MinAngularVelocity, m_MaxAngularVelocity)));
             }
 
             GameManager.Instance.SplitAsteroid(m_Count);

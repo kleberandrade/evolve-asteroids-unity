@@ -42,13 +42,17 @@ public class GameManager : MonoBehaviour
 
     [Header("Gameplay")]
     [SerializeField]
-    private float m_MaxTime = 15.0f;
-    [SerializeField]
     private int m_IncreaseEachWave = 8;
     [SerializeField]
     private float m_RespawnDistance = 2.5f;
     [SerializeField]
     private float m_RespawnTime = 2.0f;
+    [SerializeField]
+    private bool m_UseMaxTime = true;
+    [SerializeField]
+    private float m_MaxTime = 15.0f;
+    [SerializeField]
+    private bool m_ResetHighscore;
 
     [Header("Genetic Properties")]
     [SerializeField]
@@ -68,7 +72,17 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private float m_ElitismRate = 0.05f;
     [SerializeField]
-    private string m_FileName = "teste";
+    private bool m_EvaluateEliteAgain = true;
+    [SerializeField]
+    private string m_FileName;
+
+    [Header("Random")]
+    [SerializeField]
+    private bool m_UseRandomSeed;
+    [SerializeField]
+    private int m_EvolutionaryRandomSeed = 11;
+    [SerializeField]
+    private int m_GameRandomSeed = 13;
 
     private List<Chromosome> m_Population = new List<Chromosome>();
     private int m_CurrentChromosome;
@@ -87,8 +101,13 @@ public class GameManager : MonoBehaviour
 
     public void Start()
     {
-        m_Population = PopulationRandomInitialize();
+        if (m_ResetHighscore)
+        {
+            PlayerPrefs.DeleteAll();
+        }
 
+        Helper.ResetRandomNumber(m_EvolutionaryRandomSeed);
+        m_Population = PopulationRandomInitialize();
         m_ResetCoroutine = ResetGame(false);
         StartCoroutine(m_ResetCoroutine);
     }
@@ -128,6 +147,8 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(m_RespawnTime);
         }
 
+        Random.InitState(m_GameRandomSeed);
+
         m_Highscore = PlayerPrefs.GetInt(k_HighscoreKey, 0);
         m_Score = 0;
         m_Wave = 1;
@@ -149,7 +170,14 @@ public class GameManager : MonoBehaviour
         m_ScoreText.text = $"SCORE: {m_Score}";
         m_HighscoreText.text = "HIGHSCORE: " + m_Highscore;
         m_WaveText.text = string.Format("WAVE: {0}", m_Wave);
-        m_TimeText.text = $"TIME {(m_MaxTime - m_Time).ToString("0")}";
+        if (m_UseMaxTime)
+        {
+            m_TimeText.text = $"TIME {(m_MaxTime - m_Time).ToString("0")}";
+        }
+        else
+        {
+            m_TimeText.text = $"TIME {m_Time.ToString("0")}";
+        }
         m_GenerationText.text = $"GENERATION {m_CurrentGeneration + 1} / {m_MaxGeneration}";
         m_ChromosomeText.text = $"CHROMOSOME {m_CurrentChromosome + 1} / {m_PopulationSize}";
     }
@@ -162,7 +190,9 @@ public class GameManager : MonoBehaviour
         List<Chromosome> chromosomes = new List<Chromosome>();
         for (int i = 0; i < length; i++)
         {
-            chromosomes.Add(m_Population[i].Clone() as Chromosome);
+            Chromosome chromosome = m_Population[i].Clone() as Chromosome;
+            chromosome.Survived++;
+            chromosomes.Add(chromosome);
         }
 
         return chromosomes;
@@ -170,6 +200,11 @@ public class GameManager : MonoBehaviour
 
     public void Save(bool append)
     {
+        if (string.IsNullOrEmpty(m_FileName))
+        {
+            return;
+        }
+
         using (StreamWriter file = new StreamWriter(m_FileName + ".xls", append))
         {
             double bestFitness = 0.0;
@@ -185,6 +220,16 @@ public class GameManager : MonoBehaviour
 
             averageFitness /= (double)m_PopulationSize;
             file.WriteLine("{0}\t{1}", averageFitness, bestFitness);
+        }
+
+        using (StreamWriter file = new StreamWriter("chromosomes_" + m_FileName + ".xls", append))
+        {
+            for (int i = 0; i < m_PopulationSize; i++)
+            {
+                file.Write("{0}\t{1}\t{2}\t", m_Population[i].ToString(), m_Population[i].Fitness, m_Population[i].Survived);
+            }
+
+            file.WriteLine();
         }
     }
 
@@ -202,6 +247,8 @@ public class GameManager : MonoBehaviour
 
     public void NextGeneration()
     {
+        m_Population.Sort();
+
         Save(m_CurrentGeneration > 0);
         m_CurrentGeneration++;
         if (m_CurrentGeneration == m_MaxGeneration)
@@ -225,7 +272,15 @@ public class GameManager : MonoBehaviour
                 }
             }
             m_Population = new List<Chromosome>(newPopulation);
-            m_CurrentChromosome = 0;
+
+            if (m_EvaluateEliteAgain)
+            {
+                m_CurrentChromosome = 0;
+            }
+            else
+            {
+                m_CurrentChromosome = (int)(m_PopulationSize * m_ElitismRate);
+            }
         }
     }
 
@@ -233,10 +288,18 @@ public class GameManager : MonoBehaviour
     {
         if (m_Run)
         {
-            m_Time = Mathf.Clamp(m_Time + Time.deltaTime, 0, m_MaxTime);
+            if (m_UseMaxTime)
+            {
+                m_Time = Mathf.Clamp(m_Time + Time.deltaTime, 0, m_MaxTime);
+            }
+            else
+            {
+                m_Time += Time.deltaTime;
+            }
+            
             UpdateHud();
 
-            if (m_Time >= m_MaxTime)
+            if (m_UseMaxTime && m_Time >= m_MaxTime)
             {
                 m_Run = false;
                 GameObject ship = GameObject.FindGameObjectWithTag("Ship");
@@ -260,13 +323,15 @@ public class GameManager : MonoBehaviour
         m_AsteroidsRemaining = m_Wave * m_IncreaseEachWave;
         Bounds bounds = Camera.main.OrthographicBounds();
 
+        GameObject ship = GameObject.FindGameObjectWithTag("Ship");
+
         int count = 0;
         while (count < m_AsteroidsRemaining)
         {
             float x = Random.Range(bounds.min.x, bounds.max.x);
             float y = Random.Range(bounds.min.y, bounds.max.y);
 
-            if (Vector3.Distance(new Vector3(x, y, 0), Vector3.zero) > m_RespawnDistance)
+            if (Vector3.Distance(new Vector3(x, y, 0), ship != null ? ship.transform.position : Vector3.zero) > m_RespawnDistance)
             {
                 count++;
                 float angle = Random.Range(0.0f, 360.0f);

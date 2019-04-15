@@ -312,7 +312,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 7
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -537,17 +537,23 @@ MonoBehaviour:
   m_Asteroid: {fileID: 4663329913083730064, guid: 1ee0c0c45374780499158f127279ef54,
     type: 3}
   m_Ship: {fileID: 5023433477196949076, guid: f8ec8d84f8ec55b459d63f02c5cdcfa8, type: 3}
-  m_MaxTime: 10
   m_IncreaseEachWave: 20
   m_RespawnDistance: 3
   m_RespawnTime: 1
-  m_PopulationSize: 100
+  m_UseMaxTime: 1
+  m_MaxTime: 60
+  m_ResetHighscore: 1
+  m_PopulationSize: 10
   m_TournamentSelectionSize: 3
   m_CrossoverRate: 0.5
   m_MutationRate: 0.05
   m_MaxGeneration: 20
-  m_ElitismRate: 0.05
-  m_FileName: teste
+  m_ElitismRate: 0.2
+  m_EvaluateEliteAgain: 1
+  m_FileName: result
+  m_UseRandomSeed: 1
+  m_EvolutionaryRandomSeed: 11
+  m_GameRandomSeed: 31
 --- !u!4 &1000503073
 Transform:
   m_ObjectHideFlags: 0

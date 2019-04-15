@@ -14,6 +14,11 @@ public class Helper
         }
     }
 
+    public static void ResetRandomNumber(int seed)
+    {
+        m_Random = new Random(seed);
+    }
+
     public static int NextInt(int min, int max)
     {
         InitializeRandomNumber();
@@ -30,5 +35,17 @@ public class Helper
     {
         InitializeRandomNumber();
         return m_Random.NextDouble();
+    }
+
+    public static float NextFloat()
+    {
+        InitializeRandomNumber();
+        return (float)m_Random.NextDouble();
+    }
+
+    public static float NextFloat(float min, float max)
+    {
+        InitializeRandomNumber();
+        return (float)(min + m_Random.NextDouble() * (max - min));
     }
 }

@@ -36,5 +36,5 @@ sysinfo.txt
 *.unitypackage
 
 # Other files
-.xls
-.xlsx
+*.xls
+*.xlsx

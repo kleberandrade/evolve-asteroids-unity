@@ -4,17 +4,11 @@
 public class ShipController : MonoBehaviour
 {
     public float m_RotationSpeed = 100.0f;
-
     public float m_ThrustForce = 3.0f;
-
     public AudioClip m_CrashAudioClip;
-
     public AudioClip m_ShootAudioClip;
-
     public GameObject m_BulletPrefab;
-
     public float m_FireRate = 0.1f;
-
     private float m_NextFire;
 
     private Rigidbody2D m_Rigidbody;
@@ -56,7 +50,7 @@ public class ShipController : MonoBehaviour
 
     private void ShootBullet()
     {
-        Vector3 position = transform.position + transform.TransformDirection(0, 0.5f, 0);
+        var position = transform.position + transform.TransformDirection(0, 0.5f, 0);
         Instantiate(m_BulletPrefab, position, transform.rotation);
         AudioSource.PlayClipAtPoint(m_ShootAudioClip, Camera.main.transform.position);
     }

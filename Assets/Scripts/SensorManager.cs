@@ -1,19 +1,17 @@
-﻿using System;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SensorManager : MonoBehaviour
 {
     public DistanceSensor m_DistanceSensorPrefab;
 
-    public int m_DistanceSensorCount = 8;
+    public int m_Number = 8;
 
     private DistanceSensor[] m_Sensors;
 
     public void Start()
     {
-        float angle = 360 / (float)m_DistanceSensorCount;
-        for (int i = 0; i < m_DistanceSensorCount; i++)
+        float angle = 360 / (float)m_Number;
+        for (int i = 0; i < m_Number; i++)
         {
             DistanceSensor sensor = Instantiate(m_DistanceSensorPrefab);
             sensor.transform.position = transform.position;
@@ -24,36 +22,12 @@ public class SensorManager : MonoBehaviour
         m_Sensors = GetComponentsInChildren<DistanceSensor>();
     }
 
-    public int[] ToArray()
+    public float[] ToArray()
     {
-        int[] array = new int[m_Sensors.Length];
+        float[] array = new float[m_Sensors.Length];
         for (int i = 0; i < m_Sensors.Length; i++)
-        {
-            array[i] = m_Sensors[i].Detected ? 1 : 0;
-        }
+            array[i] = m_Sensors[i].Distance;
 
         return array;
-    }
-
-    public int ToDecimal()
-    {
-        int[] array = ToArray();
-        int value = 0;
-
-        for (int i = 0; i < array.Length; i++)
-        {
-            int exp = array.Length - i - 1;
-            value += (int)Math.Pow(2, exp) * array[i];
-        }
-
-        return value;
-    }
-
-    public override string ToString()
-    {
-        StringBuilder builder = new StringBuilder();
-        Array.ForEach(ToArray(), x => builder.Append(x));
-        builder.Append(" = ").Append(ToDecimal());
-        return builder.ToString();
     }
 }

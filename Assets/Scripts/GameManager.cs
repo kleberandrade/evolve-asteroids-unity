@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -40,17 +39,18 @@ public class GameManager : MonoBehaviour
     public int m_RandomSeed = 13;
 
     [Header("Genetic Properties")]
+    public string m_FileName;
     public int m_PopulationSize = 100;
+    public int m_ChromosomeLength = 24;
+    public int m_MaxGeneration = 10;
     [Range(0, 10)]
-    public int m_TournamentSelectionSize = 3;
+    public int m_TournamentSize = 3;
     [Range(0.0f, 1.0f)]
-    public float m_CrossoverRate = 0.5f;
+    public float m_Alpha = 0.5f;
     [Range(0.0f, 1.0f)]
     public float m_MutationRate = 0.02f;
-    public int m_MaxGeneration = 10;
     [Range(0.0f, 1.0f)]
     public float m_ElitismRate = 0.05f;
-    public string m_FileName;
 
     private List<Chromosome> m_Population = new List<Chromosome>();
     private int m_CurrentChromosome;
@@ -60,7 +60,6 @@ public class GameManager : MonoBehaviour
     private int m_Highscore;
     private int m_Wave;
     private int m_AsteroidsRemaining;
-    private readonly int k_ChromosomeLength = 256;
     private readonly string k_HighscoreKey = "highscore";
     private bool m_DestroyedShip;
 
@@ -81,7 +80,6 @@ public class GameManager : MonoBehaviour
         m_DestroyedShip = false;
 
         UpdateHud();
-
         SpawnShip();
         SpawnAsteroids();
     }
@@ -91,7 +89,7 @@ public class GameManager : MonoBehaviour
         List<Chromosome> population = new List<Chromosome>();
         while (population.Count < m_PopulationSize)
         {
-            Chromosome chromosome = new Chromosome(k_ChromosomeLength);
+            Chromosome chromosome = new Chromosome(m_ChromosomeLength);
             if (!population.Contains(chromosome))
             {
                 population.Add(chromosome);
@@ -103,7 +101,7 @@ public class GameManager : MonoBehaviour
     public Chromosome TournamentSelection()
     {
         List<Chromosome> chromosomes = new List<Chromosome>();
-        for (int i = 0; i < m_TournamentSelectionSize; i++)
+        for (int i = 0; i < m_TournamentSize; i++)
         {
             int index = Helper.Random(m_PopulationSize);
             Chromosome chromosome = m_Population[index].Clone() as Chromosome;
@@ -153,16 +151,6 @@ public class GameManager : MonoBehaviour
             float averageFitness = m_Population.Average(x => x.Fitness);
             file.WriteLine("{0}\t{1}", averageFitness, bestFitness);
         }
-
-        using (StreamWriter file = new StreamWriter("chromosomes_" + m_FileName + ".xls", append))
-        {
-            for (int i = 0; i < m_PopulationSize; i++)
-            {
-                file.Write("{0}\t{1}\t{2}\t", m_Population[i].ToString(), m_Population[i].Fitness, m_Population[i].Survived);
-            }
-
-            file.WriteLine();
-        }
     }
 
     public void QuitGame()
@@ -195,7 +183,7 @@ public class GameManager : MonoBehaviour
                 Chromosome parent1 = TournamentSelection();
                 Chromosome parent2 = TournamentSelection();
 
-                Chromosome offspring = parent1.Crossover(parent2, m_CrossoverRate);
+                Chromosome offspring = parent1.Crossover(parent2, m_Alpha);
                 offspring.Mutate(m_MutationRate);
 
                 if (!newPopulation.Contains(offspring))

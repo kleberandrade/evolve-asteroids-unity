@@ -1,47 +1,38 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Brain : MonoBehaviour
 {
     public Chromosome Chromosome { get; set; }
 
-    private SensorManager m_SensorManager;
+    private SensorManager m_Input;
+    private ShipController m_Output;
 
-    private ShipController m_ShipController;
-
-    private static readonly Dictionary<int, int[]> Commands = new Dictionary<int, int[]>()
-    {
-        [0] = new int[] { 0, 0, 0 },
-        [1] = new int[] { 1, 0, 0 },
-        [2] = new int[] { 0, 1, 0 },
-        [3] = new int[] { 1, 1, 0 },
-        [4] = new int[] { 0, -1, 0 },
-        [5] = new int[] { 1, -1, 0 },
-        [6] = new int[] { 0, 0, 1 },
-        [7] = new int[] { 1, 0, 1 },
-        [8] = new int[] { 0, 1, 1 },
-        [9] = new int[] { 1, 1, 1 },
-        [10] = new int[] { 0, -1, 1 },
-        [11] = new int[] { 1, -1, 1 },
-    };
+    private float m_Horizontal;
+    private float m_Vertical;
+    private float m_Fire;
 
     public void Awake()
     {
-        m_SensorManager = GetComponent<SensorManager>();
-        m_ShipController = GetComponent<ShipController>();
+        m_Input = GetComponent<SensorManager>();
+        m_Output = GetComponent<ShipController>();
     }
 
     public void Update()
     {
         if (Chromosome != null)
         {
-            int sensor = m_SensorManager.ToDecimal();
-            int control = Chromosome[sensor];
-            int[] data = Commands[control];
+            m_Vertical = m_Horizontal = m_Fire = 0.0f;
+            float[] sensors = m_Input.ToArray();
+            for (int i = 0; i < sensors.Length; i++)
+            {
+                m_Vertical += sensors[i] * Chromosome[i];
+                m_Horizontal += sensors[i] * Chromosome[i + sensors.Length];
+                m_Fire += sensors[i] * Chromosome[i + sensors.Length * 2];
+            }
 
-            m_ShipController.Vertical = data[0];
-            m_ShipController.Horizontal = data[1];
-            m_ShipController.Fire = data[2] == 1 ? true : false;
+            m_Output.Vertical = m_Vertical;
+            m_Output.Horizontal = m_Horizontal * 2.0f - 1.0f;
+            m_Output.Fire = m_Fire > 0.5f;
         }
     }
 }

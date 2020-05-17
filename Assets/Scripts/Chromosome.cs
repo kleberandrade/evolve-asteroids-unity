@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Text;
 
 public class Chromosome : IComparable<Chromosome>, IEquatable<Chromosome>, ICloneable
 {
-    private static readonly int k_MaxAllele = 12;
+    public float[] Genes { get; private set; }
 
-    public int[] Genes { get; private set; }
-
-    public int this[int index]
+    public float this[int index]
     {
         get { return Genes[index]; }
         set { Genes[index] = value; }
@@ -24,10 +21,10 @@ public class Chromosome : IComparable<Chromosome>, IEquatable<Chromosome>, IClon
 
     public Chromosome(int length)
     {
-        Genes = new int[length];
+        Genes = new float[length];
         for (int i = 0; i < Length; i++)
         {
-            Genes[i] = Helper.Random(k_MaxAllele);
+            Genes[i] = Helper.Random(0.0f, 1.0f);
         }
 
         Fitness = 0.0f;
@@ -36,19 +33,17 @@ public class Chromosome : IComparable<Chromosome>, IEquatable<Chromosome>, IClon
 
     public Chromosome(Chromosome chromosome)
     {
-        Genes = new int[chromosome.Length];
+        Genes = new float[chromosome.Length];
         Array.Copy(chromosome.Genes, Genes, Length);
         Fitness = chromosome.Fitness;
         Survived = chromosome.Survived;
     }
 
-    public Chromosome Crossover(Chromosome otherParent, float crossoverRate)
+    public Chromosome Crossover(Chromosome otherParent, float alpha)
     {
         Chromosome child = new Chromosome(Length);
         for (int i = 0; i < child.Length; i++)
-        {
-            child[i] = Helper.Random() < crossoverRate ? Genes[i] : otherParent[i];
-        }
+            child[i] = Genes[i] + alpha * (otherParent[i] - Genes[i]);
 
         return child;
     }
@@ -56,9 +51,7 @@ public class Chromosome : IComparable<Chromosome>, IEquatable<Chromosome>, IClon
     public void Mutate(float mutationRate)
     {
         for (int i = 0; i < Length; i++)
-        {
-            Genes[i] = Helper.Random() < mutationRate ? Helper.Random(k_MaxAllele) : Genes[i];
-        }
+            Genes[i] = Helper.Random() < mutationRate ? Helper.Random(0.0f, 1.0f) : Genes[i];
     }
 
     public object Clone()
@@ -93,16 +86,6 @@ public class Chromosome : IComparable<Chromosome>, IEquatable<Chromosome>, IClon
         }
 
         return 0;
-    }
-
-    public override string ToString()
-    {
-        StringBuilder builder = new StringBuilder();
-        builder.Append("[");
-        Array.ForEach(Genes, x => builder.Append(x.ToString("00")).Append("|"));
-        builder.Remove(builder.Length - 1, 1);
-        builder.Append("]");
-        return builder.ToString();
     }
 
     public override bool Equals(object obj)

@@ -2,17 +2,13 @@
 
 public class DistanceSensor : MonoBehaviour
 {
-    [SerializeField]
-    private float m_MaxDistance = 4.0f;
+    public float m_MaxDistance = 4.0f;
 
-    [SerializeField]
-    private LayerMask m_LayerMask;
+    public LayerMask m_LayerMask;
 
-    [SerializeField]
-    private Color m_RayColorWithCollision = Color.red;
+    public Color m_RayColorWithCollision = Color.red;
 
-    [SerializeField]
-    private Color m_RayColorWithoutCollision = Color.green;
+    public Color m_RayColorWithoutCollision = Color.green;
 
     private float m_Distance;
 

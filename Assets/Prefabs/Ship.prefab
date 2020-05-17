@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6367474258967350322}
   - component: {fileID: 3246410551649881364}
   - component: {fileID: 3516144944627750027}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ship
   m_TagString: Ship
   m_Icon: {fileID: 0}
@@ -51,6 +51,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -62,6 +63,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -152,9 +154,7 @@ MonoBehaviour:
   m_ShootAudioClip: {fileID: 8300000, guid: b313a1f5468369846b0e09dc5689fa73, type: 3}
   m_BulletPrefab: {fileID: 7216880989689314378, guid: 7e1bba0cf1f9223449caa32dad3d50e1,
     type: 3}
-  m_ExplosionParticleSystem: {fileID: 5804875826308633728, guid: 95d53aae6be80e54a93d745e28d7c7e1,
-    type: 3}
-  m_FireRate: 0.1
+  m_FireRate: 0.5
 --- !u!114 &6367474258967350322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,6 +194,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 727f382130dc4b948ba956a26818fa84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UseSmartControl: 1
-  m_ChromosomeSize: 256
-  m_ControlSize: 5

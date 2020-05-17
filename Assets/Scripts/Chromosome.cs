@@ -18,7 +18,7 @@ public class Chromosome : IComparable<Chromosome>, IEquatable<Chromosome>, IClon
         get { return Genes.Length; }
     }
 
-    public double Fitness { get; set; }
+    public float Fitness { get; set; }
 
     public int Survived { get; set; }
 
@@ -27,7 +27,7 @@ public class Chromosome : IComparable<Chromosome>, IEquatable<Chromosome>, IClon
         Genes = new int[length];
         for (int i = 0; i < Length; i++)
         {
-            Genes[i] = Helper.NextInt(k_MaxAllele);
+            Genes[i] = Helper.Random(k_MaxAllele);
         }
 
         Fitness = 0.0f;
@@ -42,22 +42,22 @@ public class Chromosome : IComparable<Chromosome>, IEquatable<Chromosome>, IClon
         Survived = chromosome.Survived;
     }
 
-    public Chromosome Crossover(Chromosome otherParent, double crossoverRate)
+    public Chromosome Crossover(Chromosome otherParent, float crossoverRate)
     {
         Chromosome child = new Chromosome(Length);
         for (int i = 0; i < child.Length; i++)
         {
-            child[i] = Helper.NextDouble() < crossoverRate ? Genes[i] : otherParent[i];
+            child[i] = Helper.Random() < crossoverRate ? Genes[i] : otherParent[i];
         }
 
         return child;
     }
 
-    public void Mutate(double mutationRate)
+    public void Mutate(float mutationRate)
     {
         for (int i = 0; i < Length; i++)
         {
-            Genes[i] = Helper.NextDouble() < mutationRate ? Helper.NextInt(k_MaxAllele) : Genes[i];
+            Genes[i] = Helper.Random() < mutationRate ? Helper.Random(k_MaxAllele) : Genes[i];
         }
     }
 

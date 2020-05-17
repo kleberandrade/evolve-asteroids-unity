@@ -3,29 +3,21 @@
 [RequireComponent(typeof(Rigidbody2D))]
 public class Asteroid : MonoBehaviour
 {
-    [SerializeField]
-    private AudioClip m_DestroyAudioClip;
+    public AudioClip m_DestroyAudioClip;
 
-    [SerializeField]
-    private int m_Score = 20;
+    public int m_Score = 20;
 
-    [SerializeField]
-    private GameObject m_SmallAsteroid;
+    public GameObject m_SmallAsteroid;
 
-    [SerializeField]
-    private int m_Count = 3;
+    public int m_Count = 3;
 
-    [SerializeField]
-    private float m_MinLinearVelocity = 30.0f;
+    public float m_MinLinearVelocity = 30.0f;
 
-    [SerializeField]
-    private float m_MaxLinearVelocity = 100.0f;
+    public float m_MaxLinearVelocity = 100.0f;
 
-    [SerializeField]
-    private float m_MinAngularVelocity = -180.0f;
+    public float m_MinAngularVelocity = -180.0f;
 
-    [SerializeField]
-    private float m_MaxAngularVelocity = 180.0f;
+    public float m_MaxAngularVelocity = 180.0f;
 
     public void Start()
     {

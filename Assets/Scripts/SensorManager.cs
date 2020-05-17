@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class SensorManager : MonoBehaviour
 {
-    [SerializeField]
-    private DistanceSensor m_DistanceSensorPrefab;
+    public DistanceSensor m_DistanceSensorPrefab;
 
-    [SerializeField]
-    private int m_DistanceSensorCount = 8;
+    public int m_DistanceSensorCount = 8;
 
     private DistanceSensor[] m_Sensors;
 

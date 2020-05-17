@@ -19,33 +19,27 @@ public class Helper
         m_Random = new Random(seed);
     }
 
-    public static int NextInt(int min, int max)
+    public static int Random(int min, int max)
     {
         InitializeRandomNumber();
         return m_Random.Next(min, max);
     }
 
-    public static int NextInt(int max)
+    public static int Random(int max)
     {
         InitializeRandomNumber();
-        return NextInt(0, max);
+        return Random(0, max);
     }
 
-    public static double NextDouble()
-    {
-        InitializeRandomNumber();
-        return m_Random.NextDouble();
-    }
-
-    public static float NextFloat()
+    public static float Random()
     {
         InitializeRandomNumber();
         return (float)m_Random.NextDouble();
     }
 
-    public static float NextFloat(float min, float max)
+    public static float Random(float min, float max)
     {
         InitializeRandomNumber();
-        return (float)(min + m_Random.NextDouble() * (max - min));
+        return (float)(min + (float)m_Random.NextDouble() * (max - min));
     }
 }

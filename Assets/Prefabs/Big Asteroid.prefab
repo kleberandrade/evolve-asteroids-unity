@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1912411467403280939}
   - component: {fileID: 545039956929798261}
   m_Layer: 9
-  m_Name: large-asteroid
+  m_Name: Big Asteroid
   m_TagString: Big Asteroid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49,6 +49,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -60,6 +61,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -151,10 +153,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_DestroyAudioClip: {fileID: 8300000, guid: 3e29e45cba91b7f42bc48059c57113c6, type: 3}
-  m_Score: 20
+  m_Score: 1
   m_SmallAsteroid: {fileID: 5150609704982502130, guid: 114aa8d7ba263694a988790c6f147d25,
     type: 3}
   m_Count: 3
+  m_MinLinearVelocity: 30
+  m_MaxLinearVelocity: 100
+  m_MinAngularVelocity: -180
+  m_MaxAngularVelocity: 180
 --- !u!114 &545039956929798261
 MonoBehaviour:
   m_ObjectHideFlags: 0

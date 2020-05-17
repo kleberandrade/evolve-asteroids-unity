@@ -3,26 +3,17 @@
 [RequireComponent(typeof(Rigidbody2D))]
 public class ShipController : MonoBehaviour
 {
-    [SerializeField]
-    private float m_RotationSpeed = 100.0f;
+    public float m_RotationSpeed = 100.0f;
 
-    [SerializeField]
-    private float m_ThrustForce = 3.0f;
+    public float m_ThrustForce = 3.0f;
 
-    [SerializeField]
-    private AudioClip m_CrashAudioClip;
+    public AudioClip m_CrashAudioClip;
 
-    [SerializeField]
-    private AudioClip m_ShootAudioClip;
+    public AudioClip m_ShootAudioClip;
 
-    [SerializeField]
-    private GameObject m_BulletPrefab;
+    public GameObject m_BulletPrefab;
 
-    [SerializeField]
-    private GameObject m_ExplosionParticleSystem;
-
-    [SerializeField]
-    private float m_FireRate = 0.1f;
+    public float m_FireRate = 0.1f;
 
     private float m_NextFire;
 
@@ -54,22 +45,12 @@ public class ShipController : MonoBehaviour
     public void Kill()
     {
         AudioSource.PlayClipAtPoint(m_CrashAudioClip, Camera.main.transform.position);
-        Instantiate(m_ExplosionParticleSystem, transform.position, Quaternion.identity);
-
-        transform.position = Vector3.zero;
-        m_Rigidbody.velocity = Vector3.zero;
-
         GameManager.Instance.DecrementLives();
         Destroy(gameObject);
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Bullet"))
-        {
-            return;
-        }
-
         Kill();   
     }
 

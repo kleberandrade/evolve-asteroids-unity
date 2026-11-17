@@ -1,3 +1,42 @@
+# Evolve Asteroids
+
+![Engine: Unity](https://img.shields.io/badge/Engine-Unity-555555)
+![Language: C#](https://img.shields.io/badge/Language-C%23-512BD4)
+[![Recorded Unity: 2019.3.13f1](https://img.shields.io/badge/Recorded%20Unity-2019.3.13f1-555555)](https://github.com/kleberandrade/evolve-asteroids-unity/blob/master/ProjectSettings/ProjectVersion.txt)
+[![License: MIT](https://img.shields.io/badge/License-MIT-555555)](https://github.com/kleberandrade/evolve-asteroids-unity/blob/master/LICENSE)
+
+Unity Asteroids example using a genetic algorithm to evolve ship controllers.
+
+## Getting started
+
+- Clone the repository and add `.` to Unity Hub as an existing project.
+
+- Use the recorded Editor version as the starting point. For an upgrade, work on a separate branch and preserve all `.meta` files and serialized asset references.
+
+- Open a project scene in the Editor and enter Play mode. Available scene examples: [Assets/Scenes/GA Asteroids.unity](https://github.com/kleberandrade/evolve-asteroids-unity/blob/master/Assets/Scenes/GA%20Asteroids.unity).
+
+## Recorded requirements
+
+- Recorded Unity Editor: **2019.3.13f1** in [ProjectSettings/ProjectVersion.txt](https://github.com/kleberandrade/evolve-asteroids-unity/blob/master/ProjectSettings/ProjectVersion.txt).
+
+## Repository map
+
+- [Assets](https://github.com/kleberandrade/evolve-asteroids-unity/tree/master/Assets)
+- [ProjectSettings](https://github.com/kleberandrade/evolve-asteroids-unity/tree/master/ProjectSettings)
+- [Packages](https://github.com/kleberandrade/evolve-asteroids-unity/tree/master/Packages)
+
+## Validation status
+
+This update documents the tracked source and project metadata. It does not certify a successful build, device test or compatibility with a current toolchain. Follow any project-specific validation instructions in the original material.
+
+## License and attribution
+
+See [LICENSE](https://github.com/kleberandrade/evolve-asteroids-unity/blob/master/LICENSE) and any notices accompanying third-party code and assets. This documentation update does not change licensing or authorship.
+
+---
+
+## Original project material
+
 # Evolve Asteroids - Genetic Algorithm for Asteroids Game
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/1dbdbbd63639406d9a82ef0feb640d16)](https://www.codacy.com/app/kleberandrade/evolve-asteroids?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kleberandrade/evolve-asteroids&amp;utm_campaign=Badge_Grade)
